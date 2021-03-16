@@ -11,21 +11,49 @@ namespace MVCProject.Controllers
     {
         public float LastStaffId;
         public List<NhanVien> DsNhanVien = new List<NhanVien>();
-    public IActionResult Index()
-        {
+        //[HttpGet]
+        //public IActionResult Index()
+        //{
             
+        //    byte[] json;
+        //    if (HttpContext.Session.TryGetValue("StaffList", out json)) {
+        //        DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));
+        //        LastStaffId = JsonConvert.DeserializeObject<float>(HttpContext.Session.GetString("LastStaffId"));
+        //    }
+        //    else {
+                
+        //        HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
+        //        HttpContext.Session.SetString("LastStaffId", JsonConvert.SerializeObject(LastStaffId));
+        //    }
+            
+        //    return View(DsNhanVien);
+        //}
+        //[HttpPost]
+        public IActionResult Index( string key = "")
+        {
+
             byte[] json;
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
                 DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));
                 LastStaffId = JsonConvert.DeserializeObject<float>(HttpContext.Session.GetString("LastStaffId"));
             }
             else {
-                
+
                 HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
                 HttpContext.Session.SetString("LastStaffId", JsonConvert.SerializeObject(LastStaffId));
             }
-            
+            if(key != "") {
+                List<NhanVien> dsTimKiem = new List<NhanVien>();
+                foreach (NhanVien nv in DsNhanVien) {
+                    if(nv.hoTen.ToLower().Contains(key.ToLower()) || nv.diaChi.ToLower().Contains(key.ToLower())) {
+                        dsTimKiem.Add(nv);
+                    }
+                }
+                return View(dsTimKiem);
+
+            }
             return View(DsNhanVien);
+
         }
         [HttpPost]
         public IActionResult Create(NhanVien newItem = null)

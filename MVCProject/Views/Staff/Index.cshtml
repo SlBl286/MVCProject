@@ -4,11 +4,11 @@
     ViewData["Title"] = "Danh Sách Nhân Viên";
 }
 <div>
-    <div class="input-group">
+    <form asp-action="index" method="post" class="input-group">
         <input type="search" class="form-control rounded" placeholder="Từ Khóa Cần Tìm" aria-label="Search"
                aria-describedby="search-addon" />
-        <button type="button" class="btn btn-outline-primary">Tìm</button>
-    </div>
+        <button type="submit" class="btn btn-outline-primary">Tìm</button>
+    </form>
     <h1>Danh Sách Nhân Viên</h1>
 </div>
 <div>
@@ -87,7 +87,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    Xóa Nhân Viên <span style="color:red">@item.hoTen</span>
+                                    Nhân Viên <span style="color:red">@item.hoTen</span>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
