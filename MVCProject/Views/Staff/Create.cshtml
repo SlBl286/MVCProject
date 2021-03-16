@@ -1,0 +1,27 @@
+﻿@model MVCProject.Models.NhanVien
+@{
+    ViewData["title"] = "Thêm Mới Nhân Viên";
+}
+
+<head>
+    <title>thêm Nhân Viên</title>
+</head>
+<h1>Thêm Nhân Viên</h1>
+<form action="/staff/index" method="post">
+    <label for="hoTen">Họ Tên</label>
+    <input name="hoTen" /><br />
+    <label for="ngaySinh">Ngày Sinh</label>
+    <input name="ngaySinh" type="date" /><br />
+    <label for="soDienThoai">Số Điện Thoại</label>
+    <input name="soDienThoai" /><br />
+    <label for="diaChi">Địa Chỉ</label>
+    <input name="diaChi" /><br />
+    <label for="chucVu">Chức Vụ</label>
+    <input name="chucVu" /><br />
+    <label for="soNamCongTac">Số Năm Công Tác</label>
+    <input name="soNamCongTac" type="number" /> <br />
+
+    <button type="submit">Thêm</button>
+    <button style="background:red;"><a style="text-decoration:none;color:black;" href="/Staff/Index">Hủy Bỏ</a></button>
+</form>
+

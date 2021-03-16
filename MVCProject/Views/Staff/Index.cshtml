@@ -1,0 +1,78 @@
+﻿@model List<MVCProject.Models.NhanVien>
+
+@{
+    ViewData["Title"] = "Danh Sách Nhân Viên";
+}
+
+<h1>Danh Sách Nhân Viên</h1>
+<div>
+
+    <p>
+        <a asp-action="Create">Thêm Nhân Viên</a>
+    </p>
+    
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                MNV
+            </th>
+            <th>
+                Họ Tên
+            </th>
+            <th>
+                Ngày Sinh
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Chức vụ
+            </th>
+            <th>
+                Số năm công tác
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.maNhanVien
+                    
+                </td>
+                <td>
+                    @item.hoTen
+                        
+                </td>
+                <td>
+
+                    @item.ngaySinh.ToShortDateString()
+                </td>
+                <td>
+                    @item.soDienThoai
+                </td>
+                <td>
+                    @item.diaChi
+                </td>
+                <td>
+                    @item.chucVu
+                </td>
+                <td style="text-align: center;">
+                    @item.soNamCongTac
+                </td>
+                <td>
+                    <a asp-action="Edit">Sửa</a>|
+                    <a href="/Staff/Delete">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
