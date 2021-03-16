@@ -63,11 +63,13 @@ namespace MVCProject.Controllers
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
                 DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));         
             }
-            foreach (NhanVien nv in DsNhanVien) {
-                if (nv.maNhanVien == newItem.maNhanVien) {
-
+            for (int i  = 0;i < DsNhanVien.Count;i++) {
+                if (DsNhanVien[i].maNhanVien == newItem.maNhanVien) {
+                    DsNhanVien[i] = newItem;
+                    HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
                 }
             }
+            return Redirect("/staff/index");
         }
         [HttpGet]
         public IActionResult Edit(string id)
@@ -82,9 +84,19 @@ namespace MVCProject.Controllers
         {
             return View();
         }
-        public IActionResult Delete()
+        public IActionResult Delete(string id)
         {
-            return Content("dang xay dung");
+            byte[] json;
+            if (HttpContext.Session.TryGetValue("StaffList", out json)) {
+                DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));
+            }
+            for (int i = 0; i < DsNhanVien.Count; i++) {
+                if (DsNhanVien[i].maNhanVien == id) {
+                    DsNhanVien.RemoveAt(i);
+                    HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
+                }
+            }
+            return Redirect("/staff/index");
         }
         public IActionResult Report()
         {
