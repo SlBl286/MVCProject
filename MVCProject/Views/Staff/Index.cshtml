@@ -5,7 +5,7 @@
 }
 <div>
     <form asp-action="index" method="post" class="input-group">
-        <input type="search" class="form-control rounded" placeholder="Từ Khóa Cần Tìm" aria-label="Search"
+        <input name="key" type="search" class="form-control rounded" placeholder="Từ Khóa Cần Tìm" aria-label="Search"
                aria-describedby="search-addon" />
         <button type="submit" class="btn btn-outline-primary">Tìm</button>
     </form>
@@ -76,8 +76,8 @@
                 </td>
                 <td>
                     <a class="btn btn-primary" href="/Staff/Edit/@item.maNhanVien">Sửa</a>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Xóa</button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@item.maNhanVien">Xóa</button>
+                    <div class="modal fade" id="@item.maNhanVien" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">

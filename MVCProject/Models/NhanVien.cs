@@ -12,10 +12,11 @@ namespace MVCProject.Models
         [Required]
         public string maNhanVien { get; set; }
         [Display(Name = "Họ Tên")]
-        [Required]
+        [Required]  
         public string hoTen { get; set; }
 
         [Display(Name = "Ngày Sinh")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Required]
         public DateTime ngaySinh { get; set; }
         [Display(Name = "Số điện thoại")]
