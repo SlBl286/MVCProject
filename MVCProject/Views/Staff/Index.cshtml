@@ -16,7 +16,7 @@
     <p>
         <a asp-action="Create">Thêm Nhân Viên</a>
     </p>
-    
+
 </div>
 
 <table class="table">
@@ -52,11 +52,11 @@
             <tr>
                 <td>
                     @item.maNhanVien
-                    
+
                 </td>
                 <td>
                     @item.hoTen
-                        
+
                 </td>
                 <td>
 
@@ -101,3 +101,10 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        
+    </script>
+}
