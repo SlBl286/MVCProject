@@ -65,7 +65,7 @@ namespace MVCProject.Controllers
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
                 DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));
                 LastStaffId = JsonConvert.DeserializeObject<float>(HttpContext.Session.GetString("LastStaffId"));
-                newItem.hoTen = xuLyTen(newItem.hoTen);
+                newItem.hoTen = XuLyTen(newItem.hoTen);
                 if (!IsDuplicatedStaff(newItem)) {
                     DsNhanVien.Add(newItem);
                 }  
@@ -92,19 +92,11 @@ namespace MVCProject.Controllers
         [HttpPost]
         public IActionResult Edit(NhanVien newItem = null)
         {
-            var list = SessionHelper.GetValue("tesst");
             byte[] json;
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
                 DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));         
             }
-            newItem.hoTen = xuLyTen(newItem.hoTen);
-            for (int i  = 0;i < DsNhanVien.Count;i++) {
-                if (DsNhanVien[i].hoTen == newItem.hoTen && DateTime.Compare(DsNhanVien[i].ngaySinh,newItem.ngaySinh) == 0 && DsNhanVien[i].maNhanVien != newItem.maNhanVien) {
-                    ViewBag.error = true;
-                    return View();
-                }
-                
-            }
+            newItem.hoTen = XuLyTen(newItem.hoTen);
             for (int i = 0; i < DsNhanVien.Count; i++) {
                 if (DsNhanVien[i].maNhanVien == newItem.maNhanVien) {
                     DsNhanVien[i] = newItem;
@@ -170,7 +162,7 @@ namespace MVCProject.Controllers
 
             return result; 
         }
-        public string xuLyTen(string name)
+        public string XuLyTen(string name)
         {
 
             List<char> arrName = new List<char>(name.ToLower().Trim().ToCharArray());
@@ -198,7 +190,7 @@ namespace MVCProject.Controllers
 
         public bool IsDuplicatedStaff(NhanVien pnv)
         {
-            pnv.hoTen = xuLyTen(pnv.hoTen);
+            pnv.hoTen = XuLyTen(pnv.hoTen);
             bool daTonTai = false;
             byte[] json;
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
@@ -214,6 +206,23 @@ namespace MVCProject.Controllers
                     else { daTonTai = false; }
                 }
                 else { daTonTai = false; }
+            }
+            return daTonTai;
+        }
+        public bool EditValidate(NhanVien pnv)
+        {
+            bool daTonTai = false;
+            byte[] json;
+            if (HttpContext.Session.TryGetValue("StaffList", out json)) {
+                DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));
+            }
+            pnv.hoTen = XuLyTen(pnv.hoTen);
+            for (int i = 0; i < DsNhanVien.Count; i++) {
+                if (DsNhanVien[i].hoTen == pnv.hoTen && DateTime.Compare(DsNhanVien[i].ngaySinh, pnv.ngaySinh) == 0 && DsNhanVien[i].maNhanVien != pnv.maNhanVien) {
+                    daTonTai = true;
+                    break;
+                }
+                
             }
             return daTonTai;
         }
