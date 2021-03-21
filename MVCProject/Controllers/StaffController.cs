@@ -120,7 +120,7 @@ namespace MVCProject.Controllers
         {
             return View();
         }
-        public IActionResult Delete(string id)
+        public bool Delete(string id)
         {
             byte[] json;
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
@@ -132,7 +132,7 @@ namespace MVCProject.Controllers
                     HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
                 }
             }
-            return Redirect("/staff/index");
+            return true;
         }
         public IActionResult Report()
         {
