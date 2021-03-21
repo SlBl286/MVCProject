@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="create" asp-controller="staff" method="post">
+        <form id="CreateForm" asp-action="create" asp-controller="staff" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="maNhanVien" class="control-label"></label>
@@ -26,10 +26,7 @@
                 <label asp-for="hoTen" class="control-label"></label>
                 <input asp-for="hoTen" class="form-control" />
                 <span asp-validation-for="hoTen" class="text-danger"></span>
-                @if (ViewBag.error == true)
-                {
-                    <p style="color:red;">Nhân Viên Đã Tồn Tai</p>
-                }
+
             </div>
             <div class="form-group">
                 <label asp-for="ngaySinh" class="control-label"></label>
@@ -57,18 +54,18 @@
                 <span asp-validation-for="soNamCongTac" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Thêm Mới" class="btn btn-primary" />
+                <input type="submit" value="Thêm Mới" class="btn btn-primary" id="SubmitBtn" />
             </div>
         </form>
+
     </div>
 </div>
 <a asp-action="Index">Hủy Bỏ</a>
-
+<input id="StaffListJson" value="@ViewBag.StaffListJson" hidden>
+<p id="ErrorMgs" style="color:red;"></p>
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-    
-</script>
+    <script src="~/js/staff/create.js"></script>
 }

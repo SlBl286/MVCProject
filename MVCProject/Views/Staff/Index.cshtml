@@ -46,7 +46,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="StaffTable">
         @foreach (var item in Model)
         {
             <tr>
@@ -104,7 +104,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        
-    </script>
+    <script src="~/js/staff/index.js"></script>
 }
