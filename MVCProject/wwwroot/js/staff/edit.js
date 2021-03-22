@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
-    
-    $("#Edit").submit(function (event) {
-        event.preventDefault();
+    $("#hoTen").mouseout(function () {
         var maNHanVien = $("#maNhanVien").val();
         var hoTen = $("#hoTen").val();
         var ngaySinh = $("#ngaySinh").val();
@@ -16,16 +14,57 @@
             dataType: "json",
             success: function (json) {
                 var a = json;
-                if (a == true) $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
+                if (a == true) {
+                    $("#SubmitBtn").prop("disabled", true);
+                    $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
+                    $("#hoTen").css("border-color", "red");
+                    $("#ngaySinh").css("border-color", "red");
+                }
                 if (a == false) {
+                    $("#SubmitBtn").prop('disabled', false);
                     $("#ErrorMgs").text("");
-                    $(this).unbind(event);
-                    $('#SubmitBtn').trigger('click');
+                    $("#hoTen").css("border-color", "#ced4da");
+                    $("#ngaySinh").css("border-color", "#eff1f3");
                 }
             },
             error: function (req, status, error) {
-                alert(error);
-                
+                console.log(error);
+
+            }
+        });
+    });
+    $("#ngaySinh").mouseout(function () {
+        var maNHanVien = $("#maNhanVien").val();
+        var hoTen = $("#hoTen").val();
+        var ngaySinh = $("#ngaySinh").val();
+        var soDienThoai = $("#soDienThoai").val();
+        var diaChi = $("#diaChi").val();
+        var chucVu = $("#chucVu").val();
+        var soNamCongTac = $("#soNamCongTac").val();
+        $.ajax({
+            type: "Post",
+            url: "/staff/EditValidate",
+            data: { maNHanVien: maNHanVien, hoTen: hoTen, ngaySinh: ngaySinh, soDienThoai: soDienThoai, diaChi: diaChi, chucVu: chucVu, soNamCongTac: soNamCongTac },
+            dataType: "json",
+            success: function (json) {
+                var a = json;
+                if (a == true) {
+                    $("#SubmitBtn").prop("disabled", true);
+                    $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
+                    $("#hoTen").css("border-color", "red");
+                    $("#ngaySinh").css("border-color", "red");
+                }
+                if (a == false) {
+                    $("#SubmitBtn").prop('disabled', false);
+                    $("#CreateForm").unbind(event)
+                    $("#ErrorMgs").text("");
+                    $("#hoTen").css("border-color", "ced4da");
+                    $("#ngaySinh").css("border-color", "ced4da");
+                }
+            },
+            error: function (req, status, error) {
+                console.log(error);
+
             }
         });
     });

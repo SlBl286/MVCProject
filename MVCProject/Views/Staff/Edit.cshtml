@@ -23,6 +23,7 @@
                 <label asp-for="hoTen" class="control-label"></label>
                 <input asp-for="hoTen" class="form-control" />
                 <span asp-validation-for="hoTen" class="text-danger"></span>
+                <p id="ErrorMgs" style="color:red;"></p>
             </div>
             <div class="form-group">
                 <label asp-for="ngaySinh" class="control-label"></label>
@@ -50,7 +51,7 @@
                 <span asp-validation-for="soNamCongTac" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Lưu lại" class="btn btn-primary" id="SubmitBtn" />
+                <input type="submit" value="Lưu lại" class="btn btn-success" id="SubmitBtn" />
             </div>
         </form>
     </div>
@@ -58,7 +59,7 @@
 
 <div>
     <a asp-action="Index">Trở Lại Danh Sách</a>
-    <p id="ErrorMgs" style="color:red;"></p>
+    
 </div>
 
 @section Scripts {

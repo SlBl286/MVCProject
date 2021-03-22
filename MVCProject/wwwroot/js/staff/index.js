@@ -6,19 +6,21 @@
         });
     });
 
-    $(".delBtn").click(function () {
-        var maNhanVien = $(this).text();
+    $(".delBtn").click(function (event) {
+        event.preventDefault();
+        var maNhanVien = $(this).attr("id");
+        
         $.ajax({
             type: "Post",
             url: "/staff/delete",
             data: { maNhanVien: maNhanVien},
             dataType: "json",
             success: function (json) {
-                var a = json;
-                if (a == true) alert(maNhanVien);
+                $("#Huy-" + maNhanVien).trigger("click");
+                $("#" + maNhanVien).closest("tr").remove();
             },
             error: function (req, status, error) {
-                alert(error);
+                console.log(error);
                 
             }
         });
