@@ -157,7 +157,7 @@ namespace MVCProject.Controllers
                     HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
                 }
             }
-            return Redirect("/staff/index");
+            return NoContent();
         }
         public IActionResult Report()
         {

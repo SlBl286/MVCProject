@@ -57,7 +57,7 @@
                 <span asp-validation-for="soNamCongTac" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Thêm Mới" class="btn btn-primary" />
+                <input name="addBtn" type="submit" value="Thêm Mới" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -68,7 +68,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-    
-</script>
+    <script src="~/js/staff/create.js"></script>
+
 }
