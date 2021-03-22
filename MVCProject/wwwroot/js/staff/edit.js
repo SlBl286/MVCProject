@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     
-    $("#CreateForm").submit(function (event) {
+    $("#Edit").submit(function (event) {
         event.preventDefault();
         var maNHanVien = $("#maNhanVien").val();
         var hoTen = $("#hoTen").val();
@@ -11,7 +11,7 @@
         var soNamCongTac = $("#soNamCongTac").val();
         $.ajax({
             type: "Post",
-            url: "/staff/IsDuplicatedStaff",
+            url: "/staff/EditValidate",
             data: { maNHanVien: maNHanVien, hoTen: hoTen, ngaySinh: ngaySinh, soDienThoai: soDienThoai, diaChi: diaChi, chucVu: chucVu, soNamCongTac: soNamCongTac },
             dataType: "json",
             success: function (json) {

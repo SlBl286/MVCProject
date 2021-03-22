@@ -9,24 +9,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post" id="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="maNhanVien" class="control-label"></label>
-                <input asp-for="maNhanVien" class="form-control" disabled />
+                <input name="MaNhanVien" value="@Model.maNhanVien" class="form-control" disabled />
                 <input asp-for="maNhanVien" class="form-control" hidden />
 
                 <span asp-validation-for="maNhanVien" class="text-danger"></span>
-                
+
             </div>
             <div class="form-group">
                 <label asp-for="hoTen" class="control-label"></label>
                 <input asp-for="hoTen" class="form-control" />
                 <span asp-validation-for="hoTen" class="text-danger"></span>
-                @if (ViewBag.error == true)
-                {
-                    <p style="color:red;">Nhân Viên Đã Tồn Tai</p>
-                }
             </div>
             <div class="form-group">
                 <label asp-for="ngaySinh" class="control-label"></label>
@@ -54,7 +50,7 @@
                 <span asp-validation-for="soNamCongTac" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Lưu lại" class="btn btn-primary" />
+                <input type="submit" value="Lưu lại" class="btn btn-primary" id="SubmitBtn" />
             </div>
         </form>
     </div>
@@ -62,8 +58,10 @@
 
 <div>
     <a asp-action="Index">Trở Lại Danh Sách</a>
+    <p id="ErrorMgs" style="color:red;"></p>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script src="~/js/staff/edit.js"></script>
 }
