@@ -7,7 +7,7 @@
     });
 
     $(".delBtn").click(function (event) {
-        event.preventDefault();
+        
         var maNhanVien = $(this).attr("id");
         
         $.ajax({
@@ -26,5 +26,7 @@
         });
         
     });
- });
+    
+});
+
   

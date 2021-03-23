@@ -27,7 +27,15 @@ namespace MVCProject.Controllers
                 HttpContext.Session.SetString("StaffList", JsonConvert.SerializeObject(DsNhanVien));
                 HttpContext.Session.SetString("LastStaffId", JsonConvert.SerializeObject(LastStaffId));
             }
-
+            LastStaffId = JsonConvert.DeserializeObject<float>(HttpContext.Session.GetString("LastStaffId"));
+            if (this.LastStaffId % 10 == 0) {
+                ViewBag.LastStaffId = "NV-" + (this.LastStaffId / 10000).ToString().Substring(2) + "0";
+            }
+            else {
+                ViewBag.LastStaffId = "NV-" + (this.LastStaffId / 10000).ToString().Substring(2);
+            }
+            ViewBag.StaffListJson = HttpContext.Session.GetString("StaffList");
+            ViewData["temp"] = null;
             return View(DsNhanVien);
         }
         [HttpPost]

@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MVCProject</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
+
 </head>
 <body>
     <header>
@@ -34,7 +36,18 @@
             @RenderBody()
         </main>
     </div>
+    <div class="modal fade " tabindex="-1" role="document" id="CreateModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <h4 class="modal-title text-center"></h4>
+                    <button class="close" data-dismiss="modal"><i class="fas fa-times-circle" style="font-size:32px;"></i></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - MVCProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

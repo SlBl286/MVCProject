@@ -12,10 +12,10 @@ namespace MVCProject.Models
         [Required]
         public string maNhanVien { get; set; }
         [Display(Name = "Họ Tên")]
-        [Required]  
+        [Required(ErrorMessage = "Không được bỏ trống tên")]  
         public string hoTen { get; set; }
 
-        [Display(Name = "Ngày Sinh")]    [Required]
+        [Display(Name = "Ngày Sinh")]    [Required(ErrorMessage = "Điền Ngày Sinh")]
         public DateTime ngaySinh { get; set; }
         [Display(Name = "Số điện thoại")]
     
@@ -23,9 +23,10 @@ namespace MVCProject.Models
         [Display(Name = "Địa Chỉ")]
         public string diaChi { get; set; }
         [Display(Name = "Chức Vụ")]
-        [Required]
+        [Required(ErrorMessage = "Hãy Điền Chức Vụ")]
         public string chucVu { get; set; }
         [Display(Name = "Số Năm Công Tác")]
+        [Required(ErrorMessage = "Hãy Điền Số Năm Công Tác")]
         public int soNamCongTac { get; set; }
 
         public NhanVien() { }
