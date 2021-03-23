@@ -16,7 +16,6 @@ namespace MVCProject.Controllers
        [HttpGet]
         public IActionResult Index()
         {
-
             byte[] json;
             if (HttpContext.Session.TryGetValue("StaffList", out json)) {
                 DsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("StaffList"));
