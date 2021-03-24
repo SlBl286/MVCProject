@@ -2,8 +2,8 @@
 @using MVCProject.Controllers
 @{
     ViewData["Title"] = "Danh Sách Nhân Viên";
-    var temp = ViewData["temp"] as NhanVien;
 }
+
 <div>
     <form asp-action="index" method="post" class="input-group">
         <input name="key" type="search" class="form-control rounded" placeholder="Từ Khóa Cần Tìm" aria-label="Search"
@@ -51,31 +51,31 @@
             var i = 1;
             <tr >
                 <td >
-                    @item.maNhanVien
+                    @item.MaNhanVien
 
                 </td>
                 <td id="timKiem">
-                    @item.hoTen
+                    @item.HoTen
 
                 </td>
                 <td>
 
-                    @item.ngaySinh.ToShortDateString()
+                    @item.NgaySinh.ToShortDateString()
                 </td>
                 <td>
-                    @item.soDienThoai
+                    @item.SoDienThoai
                 </td>
                 <td >
-                    @item.diaChi
+                    @item.DiaChi
                 </td>
                 <td>
-                    @item.chucVu
+                    @item.ChucVu
                 </td>
                 <td style="text-align: center;">
-                    @item.soNamCongTac
+                    @item.SoNamCongTac
                 </td>
                 <td>
-                    <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit","staff",new { id = @item.maNhanVien},Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
+                    <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit","staff",new { id = @item.MaNhanVien},Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@Model.IndexOf(item)"><i class="fas fa-trash-alt"></i> Xóa</button>
                     <div class="modal" id="NV-@Model.IndexOf(item)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
                         <div class="modal-dialog" role="document">
@@ -83,16 +83,16 @@
                                 <div class="modal-header">
                                    
                                     <h5 class="modal-title"> <i class='fas fa-exclamation-triangle fa-xs'></i> Bạn Có Chắc Muốn Xóa</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Huy-@item.maNhanVien">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Huy-@item.MaNhanVien">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    Nhân Viên <span style="color:red">@item.hoTen</span>
+                                    Nhân Viên <span style="color:red">@item.HoTen</span>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                                    <button class="btn btn-danger delBtn" id="@item.maNhanVien">Xóa</button>
+                                    <button class="btn btn-danger delBtn" id="@item.MaNhanVien">Xóa</button>
                                 </div>
                             </div>
                         </div>

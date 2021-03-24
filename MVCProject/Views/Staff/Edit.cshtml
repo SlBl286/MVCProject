@@ -9,43 +9,43 @@
         <form asp-action="Edit" method="post" id="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="maNhanVien" class="control-label"></label>
-                <input name="MaNhanVien" value="@Model.maNhanVien" class="form-control" disabled />
-                <input asp-for="maNhanVien" class="form-control" hidden />
+                <label asp-for="MaNhanVien" class="control-label"></label>
+                <input name="MaNhanVien" value="@Model.MaNhanVien" class="form-control" disabled />
+                <input asp-for="MaNhanVien" class="form-control" hidden />
 
-                <span asp-validation-for="maNhanVien" class="text-danger"></span>
+                <span asp-validation-for="MaNhanVien" class="text-danger"></span>
 
             </div>
             <div class="form-group">
-                <label asp-for="hoTen" class="control-label"></label>
-                <input asp-for="hoTen" class="form-control" />
-                <span asp-validation-for="hoTen" class="text-danger"></span>
+                <label asp-for="HoTen" class="control-label"></label>
+                <input asp-for="HoTen" class="form-control" />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
                 <p id="ErrorMgs" style="color:red;"></p>
             </div>
             <div class="form-group">
-                <label asp-for="ngaySinh" class="control-label"></label>
-                <input asp-for="ngaySinh" class="form-control" type="date" />
-                <span asp-validation-for="ngaySinh" class="text-danger"></span>
+                <label asp-for="NgaySinh" class="control-label"></label>
+                <input asp-for="NgaySinh" class="form-control" type="date" />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="soDienThoai" class="control-label"></label>
-                <input asp-for="soDienThoai" class="form-control" />
-                <span asp-validation-for="soDienThoai" class="text-danger"></span>
+                <label asp-for="SoDienThoai" class="control-label"></label>
+                <input asp-for="SoDienThoai" class="form-control" />
+                <span asp-validation-for="SoDienThoai" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="diaChi" class="control-label"></label>
-                <input asp-for="diaChi" class="form-control" />
-                <span asp-validation-for="diaChi" class="text-danger"></span>
+                <label asp-for="DiaChi" class="control-label"></label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="chucVu" class="control-label"></label>
-                <input asp-for="chucVu" class="form-control" />
-                <span asp-validation-for="chucVu" class="text-danger"></span>
+                <label asp-for="ChucVu" class="control-label"></label>
+                <input asp-for="ChucVu" class="form-control" />
+                <span asp-validation-for="ChucVu" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="soNamCongTac" class="control-label"></label>
-                <input asp-for="soNamCongTac" class="form-control" />
-                <span asp-validation-for="soNamCongTac" class="text-danger"></span>
+                <label asp-for="SoNamCongTac" class="control-label"></label>
+                <input asp-for="SoNamCongTac" class="form-control" />
+                <span asp-validation-for="SoNamCongTac" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Lưu lại" class="btn btn-success" id="SubmitBtn" />

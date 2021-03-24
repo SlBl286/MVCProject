@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
-    $("#hoTen").mouseout(function () {
-        var maNHanVien = $("#maNhanVien").val();
-        var hoTen = $("#hoTen").val();
-        var ngaySinh = $("#ngaySinh").val();
-        var soDienThoai = $("#soDienThoai").val();
-        var diaChi = $("#diaChi").val();
-        var chucVu = $("#chucVu").val();
-        var soNamCongTac = $("#soNamCongTac").val();
+    $("#HoTen").mouseout(function () {
+        var maNHanVien = $("#MaNhanVien").val();
+        var hoTen = $("#HoTen").val();
+        var ngaySinh = $("#NgaySinh").val();
+        var soDienThoai = $("#SoDienThoai").val();
+        var diaChi = $("#DiaChi").val();
+        var chucVu = $("#ChucVu").val();
+        var soNamCongTac = $("#SoNamCongTac").val();
         $.ajax({
             type: "Post",
             url: "/staff/EditValidate",
@@ -17,13 +17,13 @@
                 if (a == true) {
                     $("#SubmitBtn").prop("disabled", true);
                     $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
-                    $("#hoTen").css("border-color", "red");
-                    $("#ngaySinh").css("border-color", "red");
+                    $("#HoTen").css("border-color", "red");
+                    $("#NgaySinh").css("border-color", "red");
                 }
                 if (a == false) {
                     $("#SubmitBtn").prop('disabled', false);
                     $("#ErrorMgs").text("");
-                    $("#hoTen").css("border-color", "#ced4da");
+                    $("#HoTen").css("border-color", "#ced4da");
                     $("#ngaySinh").css("border-color", "#eff1f3");
                 }
             },
@@ -33,14 +33,14 @@
             }
         });
     });
-    $("#ngaySinh").mouseout(function () {
-        var maNHanVien = $("#maNhanVien").val();
-        var hoTen = $("#hoTen").val();
-        var ngaySinh = $("#ngaySinh").val();
-        var soDienThoai = $("#soDienThoai").val();
-        var diaChi = $("#diaChi").val();
-        var chucVu = $("#chucVu").val();
-        var soNamCongTac = $("#soNamCongTac").val();
+    $("#NgaySinh").mouseout(function () {
+        var maNHanVien = $("#MaNhanVien").val();
+        var hoTen = $("#HoTen").val();
+        var ngaySinh = $("#NgaySinh").val();
+        var soDienThoai = $("#SoDienThoai").val();
+        var diaChi = $("#DiaChi").val();
+        var chucVu = $("#ChucVu").val();
+        var soNamCongTac = $("#SoNamCongTac").val();
         $.ajax({
             type: "Post",
             url: "/staff/EditValidate",
@@ -51,15 +51,15 @@
                 if (a == true) {
                     $("#SubmitBtn").prop("disabled", true);
                     $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
-                    $("#hoTen").css("border-color", "red");
-                    $("#ngaySinh").css("border-color", "red");
+                    $("#HoTen").css("border-color", "red");
+                    $("#NgaySinh").css("border-color", "red");
                 }
                 if (a == false) {
                     $("#SubmitBtn").prop('disabled', false);
                     $("#CreateForm").unbind(event)
                     $("#ErrorMgs").text("");
-                    $("#hoTen").css("border-color", "ced4da");
-                    $("#ngaySinh").css("border-color", "ced4da");
+                    $("#HoTen").css("border-color", "ced4da");
+                    $("#NgaySinh").css("border-color", "ced4da");
                 }
             },
             error: function (req, status, error) {
@@ -68,5 +68,5 @@
             }
         });
     });
-
+    
 });

@@ -10,34 +10,34 @@ namespace MVCProject.Models
     {
         [Display(Name = "Mã Nhân Viên")]
         [Required]
-        public string maNhanVien { get; set; }
+        public string MaNhanVien { get; set; }
         [Display(Name = "Họ Tên")]
         [Required(ErrorMessage = "Không được bỏ trống tên")]  
-        public string hoTen { get; set; }
+        public string HoTen { get; set; }
         [Display(Name = "Ngày Sinh")]    [Required(ErrorMessage = "Điền Ngày Sinh")]
-        public DateTime ngaySinh { get; set; }
+        public DateTime NgaySinh { get; set; }
         [Display(Name = "Số điện thoại")]
         [RegularExpression(@"^(\d{10})$", ErrorMessage = "Số điện Thoại sai")]
-        public string soDienThoai {  set; get; }
+        public string SoDienThoai {  set; get; }
         [Display(Name = "Địa Chỉ")]
-        public string diaChi { get; set; }
+        public string DiaChi { get; set; }
         [Display(Name = "Chức Vụ")]
         [Required(ErrorMessage = "Hãy Điền Chức Vụ")]
-        public string chucVu { get; set; }
+        public string ChucVu { get; set; }
         [Display(Name = "Số Năm Công Tác")]
         [Required(ErrorMessage = "Hãy Điền Số Năm Công Tác")]
-        public int soNamCongTac { get; set; }
+        public int SoNamCongTac { get; set; }
 
         public NhanVien() { }
         public NhanVien(string maNhanVien, string hoTen, DateTime ngaySinh, string soDienThoai, string diaChi, string chucVu, int soNamCongTac)
         {
-            this.maNhanVien = maNhanVien;
-            this.hoTen = hoTen;
-            this.ngaySinh = ngaySinh;
-            this.soDienThoai = soDienThoai;
-            this.diaChi = diaChi;
-            this.chucVu = chucVu;
-            this.soNamCongTac = soNamCongTac;
+            this.MaNhanVien = maNhanVien;
+            this.HoTen = hoTen;
+            this.NgaySinh = ngaySinh;
+            this.SoDienThoai = soDienThoai;
+            this.DiaChi = diaChi;
+            this.ChucVu = chucVu;
+            this.SoNamCongTac = soNamCongTac;
         }
     }
 }
