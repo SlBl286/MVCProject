@@ -13,9 +13,9 @@
     <h1>Danh Sách Nhân Viên</h1>
 </div>
 <div>
-        <button class="btn btn-success btn-sm" onclick="showInPopup('@Url.Action("create","staff",null,Context.Request.Scheme)','THÊM NHÂN VIÊN')">Thêm Nhân Viên</button>
+        <button class="btn btn-success btn" onclick="showInPopup('@Url.Action("create","staff",null,Context.Request.Scheme)','THÊM NHÂN VIÊN')"><i class="fas fa-plus"></i> Thêm Nhân Viên</button>
 </div>
-
+<br />
 <table  class="table table-striped table-hover">
     <thead>
         <tr>
@@ -40,7 +40,9 @@
             <th>
                 Số năm công tác
             </th>
-            <th></th>
+            <th>
+                Chức Năng
+            </th>
         </tr>
     </thead>
     <tbody id="StaffTable">
@@ -73,14 +75,14 @@
                     @item.soNamCongTac
                 </td>
                 <td>
-                    <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit","staff",new { id = @item.maNhanVien},Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')" >Sửa</button>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@Model.IndexOf(item)">Xóa</button>
+                    <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit","staff",new { id = @item.maNhanVien},Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@Model.IndexOf(item)"><i class="fas fa-trash-alt"></i> Xóa</button>
                     <div class="modal" id="NV-@Model.IndexOf(item)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                    
-                                    <h5 class="modal-title"> <i class='fas fa-exclamation-triangle fa-xs'></i>Bạn Có Chắc Muốn Xóa</h5>
+                                    <h5 class="modal-title"> <i class='fas fa-exclamation-triangle fa-xs'></i> Bạn Có Chắc Muốn Xóa</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Huy-@item.maNhanVien">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -89,7 +91,7 @@
                                     Nhân Viên <span style="color:red">@item.hoTen</span>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"  >Hủy</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                     <button class="btn btn-danger delBtn" id="@item.maNhanVien">Xóa</button>
                                 </div>
                             </div>

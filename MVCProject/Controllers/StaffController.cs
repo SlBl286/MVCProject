@@ -154,11 +154,11 @@ namespace MVCProject.Controllers
         }
         public void TaoDsNhanVien()
         {
-            DsNhanVien.Add(new NhanVien("NV-0001", "Đoàn Duy Quý", DateTime.Parse("28/6/2000"), "09715869331", "Hà Nội", "Nhan vien", 5));
-            DsNhanVien.Add(new NhanVien("NV-0002", "Nguyễn Văn A", DateTime.Parse("3/7/1999"), "09715869331", "Hồ Chí Minh", "Nhan vien", 5));
-            DsNhanVien.Add(new NhanVien("NV-0003", "Le Thi B", DateTime.Parse("8/12/1996"), "09715869331", "Hà Nội", "Nhan vien", 5));
-            DsNhanVien.Add(new NhanVien("NV-0004", "Trần Văn C", DateTime.Parse("28/6/2000"), "09715869331", "Hải Phòng", "Nhan vien", 5));
-            DsNhanVien.Add(new NhanVien("NV-0005", "Bùi Tiến Đạt", DateTime.Parse("24/9/2000"), "09715869331", "Đà Nẵng", "Nhan vien", 5));
+            DsNhanVien.Add(new NhanVien("NV-0001", "Đoàn Duy Quý", DateTime.Parse("28/6/2000"), "0971586931", "Hà Nội", "Nhan vien", 5));
+            DsNhanVien.Add(new NhanVien("NV-0002", "Nguyễn Văn A", DateTime.Parse("3/7/1999"), "0971586931", "Hồ Chí Minh", "Nhan vien", 5));
+            DsNhanVien.Add(new NhanVien("NV-0003", "Le Thi B", DateTime.Parse("8/12/1996"), "0971586931", "Hà Nội", "Nhan vien", 5));
+            DsNhanVien.Add(new NhanVien("NV-0004", "Trần Văn C", DateTime.Parse("28/6/2000"), "0971586931", "Hải Phòng", "Nhan vien", 5));
+            DsNhanVien.Add(new NhanVien("NV-0005", "Bùi Tiến Đạt", DateTime.Parse("24/9/2000"), "0971586931", "Đà Nẵng", "Nhan vien", 5));
         }
         public NhanVien GetByMNV(string MNV)
         {

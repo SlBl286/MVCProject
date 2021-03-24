@@ -14,12 +14,11 @@ namespace MVCProject.Models
         [Display(Name = "Họ Tên")]
         [Required(ErrorMessage = "Không được bỏ trống tên")]  
         public string hoTen { get; set; }
-
         [Display(Name = "Ngày Sinh")]    [Required(ErrorMessage = "Điền Ngày Sinh")]
         public DateTime ngaySinh { get; set; }
         [Display(Name = "Số điện thoại")]
-    
-        public string soDienThoai { get; set; }
+        [RegularExpression(@"^(\d{10})$", ErrorMessage = "Số điện Thoại sai")]
+        public string soDienThoai {  set; get; }
         [Display(Name = "Địa Chỉ")]
         public string diaChi { get; set; }
         [Display(Name = "Chức Vụ")]
