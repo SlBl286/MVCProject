@@ -64,9 +64,9 @@ namespace MVCProject.Controllers
             return View();
         }
         [HttpPost]
-        public bool Delete(string maNhanVien)
+        public bool Delete(string MaNhanVien)
         {
-            DBHelper.Delete(maNhanVien);
+            DBHelper.Delete(MaNhanVien);
             return true;
         }
         public IActionResult Report()

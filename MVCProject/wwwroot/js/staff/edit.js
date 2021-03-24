@@ -1,16 +1,16 @@
 ﻿$(document).ready(function () {
-    $("#HoTen").mouseout(function () {
-        var maNHanVien = $("#MaNhanVien").val();
-        var hoTen = $("#HoTen").val();
-        var ngaySinh = $("#NgaySinh").val();
-        var soDienThoai = $("#SoDienThoai").val();
-        var diaChi = $("#DiaChi").val();
-        var chucVu = $("#ChucVu").val();
-        var soNamCongTac = $("#SoNamCongTac").val();
+    $("#HoTen").blur(function () {
+        var MaNhanVien = $("#MaNhanVien").val();
+        var HoTen = $("#HoTen").val();
+        var NgaySinh = $("#NgaySinh").val();
+        var SoDienThoai = $("#SoDienThoai").val();
+        var DiaChi = $("#DiaChi").val();
+        var ChucVu = $("#ChucVu").val();
+        var SoNamCongTac = $("#SoNamCongTac").val();
         $.ajax({
             type: "Post",
             url: "/staff/EditValidate",
-            data: { maNHanVien: maNHanVien, hoTen: hoTen, ngaySinh: ngaySinh, soDienThoai: soDienThoai, diaChi: diaChi, chucVu: chucVu, soNamCongTac: soNamCongTac },
+            data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac },
             dataType: "json",
             success: function (json) {
                 var a = json;
@@ -24,7 +24,7 @@
                     $("#SubmitBtn").prop('disabled', false);
                     $("#ErrorMgs").text("");
                     $("#HoTen").css("border-color", "#ced4da");
-                    $("#ngaySinh").css("border-color", "#eff1f3");
+                    $("#NgaySinh").css("border-color", "#eff1f3");
                 }
             },
             error: function (req, status, error) {
@@ -33,18 +33,18 @@
             }
         });
     });
-    $("#NgaySinh").mouseout(function () {
-        var maNHanVien = $("#MaNhanVien").val();
-        var hoTen = $("#HoTen").val();
-        var ngaySinh = $("#NgaySinh").val();
-        var soDienThoai = $("#SoDienThoai").val();
-        var diaChi = $("#DiaChi").val();
-        var chucVu = $("#ChucVu").val();
-        var soNamCongTac = $("#SoNamCongTac").val();
+    $("#NgaySinh").blur(function () {
+        var MaNhanVien = $("#MaNhanVien").val();
+        var HoTen = $("#HoTen").val();
+        var NgaySinh = $("#NgaySinh").val();
+        var SoDienThoai = $("#SoDienThoai").val();
+        var DiaChi = $("#DiaChi").val();
+        var ChucVu = $("#ChucVu").val();
+        var SoNamCongTac = $("#SoNamCongTac").val();
         $.ajax({
             type: "Post",
             url: "/staff/EditValidate",
-            data: { maNHanVien: maNHanVien, hoTen: hoTen, ngaySinh: ngaySinh, soDienThoai: soDienThoai, diaChi: diaChi, chucVu: chucVu, soNamCongTac: soNamCongTac },
+            data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac },
             dataType: "json",
             success: function (json) {
                 var a = json;

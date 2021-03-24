@@ -1,9 +1,16 @@
 ﻿$(document).ready(function () {
-    $("SubmitBtn").click(function () {
-        $(this).addClass(" spinner spinner-border ");
+
+    $("SubmitBtn").click(function (event) {
+        event.preventDefault();
+
+        $(this).removeClass("btn").removeClass("btn-success");
+        $(this).addClass("spinner").addClass("spinner-border");
+        setTimeout(function () {
+
+        }, 3000);
     });
     $("#HoTen").blur(function () {
-        var MaNHanVien = $("#MaNhanVien").val();
+        var MaNhanVien = $("#MaNhanVien").val();
         var HoTen = $("#HoTen").val();
         var NgaySinh = $("#NgaySinh").val();
         var SoDienThoai = $("#SoDienThoai").val();
@@ -18,13 +25,13 @@
             success: function (json) {
                 var a = json;
                 if (a == true) {
-                    $("#SubmitBtn").prop("disabled", true);
+                    $("SubmitBtn").prop("disabled", true);
                     $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
                     $("#HoTen").css("border-color", "red");
                     $("#ngaySinh").css("border-color", "red");
                 }
                 if (a == false) {
-                    $("#SubmitBtn").prop('disabled', false);
+                    $("SubmitBtn").prop('disabled', false);
                     $("#ErrorMgs").text("");
                     $("#HoTen").css("border-color", "#ced4da");
                     $("#NgaySinh").css("border-color", "#eff1f3");
@@ -52,13 +59,13 @@
             success: function (json) {
                 var a = json;
                 if (a == true) {
-                    $("#SubmitBtn").prop("disabled", true);
+                    $("SubmitBtn").prop("disabled", true);
                     $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
                     $("#HoTen").css("border-color", "red");
                     $("#NgaySinh").css("border-color", "red");
                 } 
                 if (a == false) {
-                    $("#SubmitBtn").prop('disabled', false);
+                    $("SubmitBtn").prop('disabled', false);
                     $("#CreateForm").unbind(event)
                     $("#ErrorMgs").text("");
                     $("#HoTen").css("border-color", "ced4da");
@@ -71,4 +78,5 @@
             }
         });
     });
+
 });

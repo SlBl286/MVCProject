@@ -8,16 +8,16 @@
 
     $(".delBtn").click(function (event) {
         
-        var maNhanVien = $(this).attr("id");
+        var MaNhanVien = $(this).attr("id");
         
         $.ajax({
             type: "Post",
             url: "/staff/delete",
-            data: { maNhanVien: maNhanVien},
+            data: { MaNhanVien: MaNhanVien},
             dataType: "json",
             success: function (json) {
-                $("#Huy-" + maNhanVien).trigger("click");
-                $("#" + maNhanVien).closest("tr").remove();
+                $("#Huy-" + MaNhanVien).trigger("click");
+                $("#" + MaNhanVien).closest("tr").remove();
             },
             error: function (req, status, error) {
                 console.log(error);
