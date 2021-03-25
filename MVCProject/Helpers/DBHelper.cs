@@ -42,9 +42,8 @@ namespace MVCProject.Helpers
             
             using (var connection = new NpgsqlConnection(this.connectionString)) {
                 connection.Open();
-                var id = connection.Query<int>("SELECT id FROM nhanVien ORDER BY ID DESC LIMIT 1");
-                int a = (int)id.Count();
-                if (a == 0) return 0;
+                var id = connection.Query<int>("select nextval('nhanvien_id_seq'::regclass); ");
+                if ((int)id.Count() == 0) return 0;
                 return id.First();
             }
             

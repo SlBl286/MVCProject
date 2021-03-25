@@ -1,14 +1,4 @@
 ﻿$(document).ready(function () {
-
-    $("SubmitBtn").click(function (event) {
-        event.preventDefault();
-
-        $(this).removeClass("btn").removeClass("btn-success");
-        $(this).addClass("spinner").addClass("spinner-border");
-        setTimeout(function () {
-
-        }, 3000);
-    });
     $("#HoTen").blur(function () {
         var MaNhanVien = $("#MaNhanVien").val();
         var HoTen = $("#HoTen").val();

@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.Helpers;
 using MVCProject.Models;
-using Newtonsoft.Json;
-using Npgsql;
 using System;
 using System.Collections.Generic;
 
@@ -13,7 +11,6 @@ namespace MVCProject.Controllers
     {
          
         public float LastStaffId;
-        public List<NhanVien> DsNhanVien = new List<NhanVien>();
         public DBHelper DBHelper = new DBHelper("HOST=127.0.0.1;Username=postgres;Password=220287;Database=MVCProject");
        [HttpGet]
         public IActionResult Index()
@@ -21,23 +18,24 @@ namespace MVCProject.Controllers
             return View(DBHelper.Get());
         }
         [HttpPost]
-        public IActionResult Index( string key = "")
+        public JsonResult Search( string key = "")
         {
 
-            return View(DBHelper.Get(key));
+            return DBHelper.Get(key);
 
         }
         [HttpPost]
         public IActionResult Create(NhanVien newItem = null)
         {
             newItem.HoTen = XuLyTen(newItem.HoTen);
+            newItem.DiaChi = XuLyTen(newItem.DiaChi);
             DBHelper.Create(newItem);
             return Redirect("/staff/index");
         }
         [HttpGet]
         public IActionResult Create()
         {
-            LastStaffId = DBHelper.GetTheLastID() + 1;
+            LastStaffId = DBHelper.GetTheLastID();
             if (this.LastStaffId % 10 == 0) {
                 ViewBag.LastStaffId = "NV-" + (this.LastStaffId / 10000).ToString().Substring(2) + "0";
             }
@@ -50,6 +48,7 @@ namespace MVCProject.Controllers
         public IActionResult Edit(NhanVien newItem = null)
         {
             newItem.HoTen = XuLyTen(newItem.HoTen);
+            newItem.DiaChi = XuLyTen(newItem.DiaChi);
             DBHelper.Update(newItem);
             return Redirect("/staff/index");
         }
@@ -115,7 +114,7 @@ namespace MVCProject.Controllers
         {
             pnv.HoTen = XuLyTen(pnv.HoTen);
             bool daTonTai = false;
-                DsNhanVien = DBHelper.Get();
+            List<NhanVien> DsNhanVien = DBHelper.Get();
             foreach (NhanVien nv in DsNhanVien) {
                 if (nv.HoTen == pnv.HoTen) {
                     if (DateTime.Compare(nv.NgaySinh, pnv.NgaySinh) == 0) {
@@ -132,7 +131,7 @@ namespace MVCProject.Controllers
         public bool EditValidate(NhanVien pnv)
         {
             bool daTonTai = false;
-                DsNhanVien = DBHelper.Get();
+            List<NhanVien> DsNhanVien = DBHelper.Get();
             pnv.HoTen = XuLyTen(pnv.HoTen);
             for (int i = 0; i < DsNhanVien.Count; i++) {
                 if (DsNhanVien[i].HoTen == pnv.HoTen && DateTime.Compare(DsNhanVien[i].NgaySinh, pnv.NgaySinh) == 0 && DsNhanVien[i].MaNhanVien != pnv.MaNhanVien) {

@@ -1,8 +1,19 @@
 ﻿$(document).ready(function () {
     $("input[name='key']").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#StaffTable tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+        $.ajax({
+            type: "Post",
+            url: "/staff/index",
+            data: { key : value },
+            dataType: "json",
+            success: function (json) {
+                
+            },
+            error: function (req, status, error) {
+                console.log(error);
+
+            }
         });
     });
 
