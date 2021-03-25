@@ -4,6 +4,8 @@ using MVCProject.Helpers;
 using MVCProject.Models;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+
 
 namespace MVCProject.Controllers
 {
@@ -11,17 +13,23 @@ namespace MVCProject.Controllers
     {
          
         public float LastStaffId;
-        public DBHelper DBHelper = new DBHelper("HOST=127.0.0.1;Username=postgres;Password=220287;Database=MVCProject");
        [HttpGet]
         public IActionResult Index()
         {
             return View(DBHelper.Get());
         }
         [HttpPost]
-        public JsonResult Search( string key = "")
+        public IActionResult Index( string key = "")
         {
 
-            return DBHelper.Get(key);
+            return View(DBHelper.Get(key));
+
+        }
+        [HttpPost]
+        public IActionResult Search(string key = "")
+        {
+            List<NhanVien> dsTim = DBHelper.Get(key);
+            return View(dsTim);
 
         }
         [HttpPost]
