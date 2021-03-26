@@ -56,7 +56,6 @@
                 }
                 if (a == false) {
                     $("#SubmitBtn").prop('disabled', false);
-                    $("#CreateForm").unbind(event)
                     $("#ErrorMgs").text("");
                     $("#HoTen").css("border-color", "ced4da");
                     $("#NgaySinh").css("border-color", "ced4da");
@@ -68,5 +67,5 @@
             }
         });
     });
-    
+   
 });

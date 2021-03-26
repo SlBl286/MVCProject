@@ -1,0 +1,92 @@
+﻿
+@model List<MVCProject.Models.NhanVien>
+@using MVCProject.Controllers
+@{
+    Layout = null;
+    var itemPerPage = ViewBag.itemPerPage;
+    var pageIndex = ViewBag.pageIndex;
+    var pageNunber = (int)Model.Count / itemPerPage;
+
+}
+
+@for (var i = itemPerPage * pageIndex; i < itemPerPage * (pageIndex + 1); i++)
+{
+
+    @if (pageIndex == pageNunber && i == Model.Count)
+    {
+        break;
+    }
+    <tr>
+        <td>
+            @Model[i].MaNhanVien
+
+        </td>
+        <td id="timKiem">
+            @Model[i].HoTen
+
+        </td>
+        <td>
+
+            @Model[i].NgaySinh.ToShortDateString()
+        </td>
+        <td>
+            @Model[i].SoDienThoai
+        </td>
+        <td>
+            @Model[i].DiaChi
+        </td>
+        <td>
+            @Model[i].ChucVu
+        </td>
+        <td style="text-align: center;">
+            @Model[i].SoNamCongTac
+        </td>
+        <td>
+            <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit", "staff", new { id = Model[i].MaNhanVien }, Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@i" ><i class="fas fa-trash-alt"></i> Xóa</button>
+            <div class="modal" id="NV-@i"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h5 class="modal-title"> <i class='fas fa-exclamation-triangle fa-xs'></i> Bạn Có Chắc Muốn Xóa</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Huy-@Model[i].MaNhanVien">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body ">
+                            Nhân Viên <span style="color:red">@Model[i].HoTen</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <button class="btn btn-danger delBtn" id="@Model[i].MaNhanVien">Xóa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+}
+
+<script>
+    $(".delBtn").click(function () {
+
+        var MaNhanVien = $(this).attr("id");
+
+        $.ajax({
+            type: "Post",
+            url: "/staff/delete",
+            data: { MaNhanVien: MaNhanVien },
+            dataType: "json",
+            success: function (json) {
+                $("#Huy-" + MaNhanVien).trigger("click");
+                $("#" + MaNhanVien).closest("tr").remove();
+            },
+            error: function (req, status, error) {
+                console.log(error);
+
+            }
+        });
+
+    });
+</script>

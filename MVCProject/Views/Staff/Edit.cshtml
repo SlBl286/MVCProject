@@ -6,7 +6,7 @@
 }
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Edit" method="post" id="Edit">
+        <form asp-action="Edit" method="post" id="EditForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MaNhanVien" class="control-label"></label>
@@ -55,7 +55,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Trở Lại Danh Sách</a>
+    <a href="#" data-dismiss="modal">Trở Lại Danh Sách</aref="#">
     
 </div>
 

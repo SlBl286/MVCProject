@@ -16,7 +16,7 @@
                     var MaNhanVien = ViewBag.LastStaffId;
                 }
                 <input name="maNhanVien" value="@MaNhanVien" class="form-control" disabled />
-                <input name="MaNhanVien" value="@MaNhanVien" hidden />
+                <input name="MaNhanVien" id="MaNhanVien" value="@MaNhanVien" hidden />
 
                 <span asp-validation-for="MaNhanVien" class="text-danger"></span>
             </div>
@@ -53,14 +53,18 @@
                 <span asp-validation-for="SoNamCongTac" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success" id="SubmitBtn" >Thêm Mới</button>
+                <button type="submit" class="btn btn-success" id="SubmitBtn" disabled>Thêm Mới</button>
             </div>
         </form>
 
     </div>
 </div>
 
+<div>
+    <a href="#" data-dismiss="modal">Trở Lại Danh Sách</a>
+
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script src="~/js/staff/create.js"></script>
+    <script src="~/js/staff/create.js"></script>
 }

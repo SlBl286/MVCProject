@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("#HoTen").blur(function () {
+    $("#CreateForm #HoTen").blur(function () {
         var MaNhanVien = $("#MaNhanVien").val();
         var HoTen = $("#HoTen").val();
         var NgaySinh = $("#NgaySinh").val();
@@ -33,7 +33,7 @@
             }
         });
     });
-    $("#NgaySinh").blur(function () {
+    $("#CreateForm #NgaySinh").blur(function () {
         var MaNhanVien = $("#MaNhanVien").val();
         var HoTen = $("#HoTen").val();
         var NgaySinh = $("#NgaySinh").val();
@@ -68,5 +68,45 @@
             }
         });
     });
+    $("#CreateForm").submit(function (event) {
+        event.preventDefault();
+        var SoDienThoai = "";
+        var DiaChi = "";
+        var MaNhanVien = $("#MaNhanVien").val();
+        var HoTen = $("#HoTen").val();
+        var NgaySinh = $("#NgaySinh").val();
+        SoDienThoai = $("#SoDienThoai").val();
+        DiaChi = $("#DiaChi").val();
+        var ChucVu = $("#ChucVu").val();
+        var SoNamCongTac = $("#SoNamCongTac").val();
+            $.ajax({
+                type: "Post",
+                url: "/staff/create",
+                data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac },
+                dataType: "json",
+                success: function (json) {
+                    var pageIndex = json;
+                    $.ajax({
+                        type: "Post",
+                        url: "/staff/getpage",
+                        data: { pageIndex: pageIndex },
+                        dataType: "text",
+                        success: function (data) {
+                            $(".close").trigger("click");
+                            $("#p-" + (pageIndex).toString()).trigger("click");
+                            $("#StaffTable").html(data);
+                        },
+                        error: function (req, status, error) {
+                            console.log(error);
 
+                        }
+                    });
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+
+                }
+            });
+        
+    });
 });

@@ -9,13 +9,14 @@ using Newtonsoft.Json;
 
 namespace MVCProject.Controllers
 {
+    
     public class StaffController : Controller
     {
-         
-        public float LastStaffId;
-       [HttpGet]
+        private int itemPerPage = 8;
+        [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.itemPerPage = itemPerPage;
             return View(DBHelper.Get());
         }
         [HttpPost]
@@ -29,36 +30,38 @@ namespace MVCProject.Controllers
         public IActionResult Search(string key = "")
         {
             List<NhanVien> dsTim = DBHelper.Get(key);
+            ViewBag.itemPerPage = itemPerPage;
             return View(dsTim);
 
         }
         [HttpPost]
-        public IActionResult Create(NhanVien newItem = null)
+        public int Create(NhanVien newItem = null)
         {
             newItem.HoTen = XuLyTen(newItem.HoTen);
             newItem.DiaChi = XuLyTen(newItem.DiaChi);
             DBHelper.Create(newItem);
-            return Redirect("/staff/index");
+
+            return (int)DBHelper.Get().Count / itemPerPage;
         }
         [HttpGet]
         public IActionResult Create()
         {
-            LastStaffId = DBHelper.GetTheLastID();
-            if (this.LastStaffId % 10 == 0) {
-                ViewBag.LastStaffId = "NV-" + (this.LastStaffId / 10000).ToString().Substring(2) + "0";
+            double LastStaffId = DBHelper.GetTheLastID();
+            if (LastStaffId % 10 == 0) {
+                ViewBag.LastStaffId = "NV-" + (LastStaffId / 10000).ToString().Substring(2) + "0";
             }
             else {
-                ViewBag.LastStaffId = "NV-" + (this.LastStaffId / 10000).ToString().Substring(2);
+                ViewBag.LastStaffId = "NV-" + (LastStaffId / 10000).ToString().Substring(2);
             }
             return View();
         }
         [HttpPost]
-        public IActionResult Edit(NhanVien newItem = null)
+        public int Edit(NhanVien newItem = null, int pageIndex = 0)
         {
             newItem.HoTen = XuLyTen(newItem.HoTen);
             newItem.DiaChi = XuLyTen(newItem.DiaChi);
             DBHelper.Update(newItem);
-            return Redirect("/staff/index");
+            return pageIndex;
         }
         [HttpGet]
         public IActionResult Edit(string id)
@@ -116,6 +119,14 @@ namespace MVCProject.Controllers
                 }
             }
             return result;
+        }
+
+
+        public IActionResult GetPage(int pageIndex)
+        {
+            ViewBag.pageIndex = pageIndex;
+            ViewBag.itemPerPage = itemPerPage;
+            return View(DBHelper.Get());
         }
 
         public bool IsDuplicatedStaff(NhanVien pnv)

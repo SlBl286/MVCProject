@@ -22,7 +22,7 @@ namespace MVCProject.Helpers
                 if (key == "")
                     nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien order by MaNhanVien ASC");
                 else
-                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien where HoTen like '%' || @key || '%' OR HoTen like @key || '%' OR HoTen like '%' || @key ", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien where public.converttvkdau(HoTen) like '%' || public.converttvkdau(@key) || '%' ", new { key = key });
             }
             return nhanvien.ToList();
         }
