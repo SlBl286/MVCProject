@@ -40,7 +40,9 @@ namespace MVCProject.Controllers
             newItem.HoTen = XuLyTen(newItem.HoTen);
             newItem.DiaChi = XuLyTen(newItem.DiaChi);
             DBHelper.Create(newItem);
-
+            if( ((int)DBHelper.Get().Count % itemPerPage == 0) && ((int)DBHelper.Get().Count / itemPerPage > 0)){
+                return (int)DBHelper.Get().Count / itemPerPage -1;
+            }
             return (int)DBHelper.Get().Count / itemPerPage;
         }
         [HttpGet]
@@ -67,32 +69,24 @@ namespace MVCProject.Controllers
         public IActionResult Edit(string id)
         {
             
-            return View(GetByMNV(id));
+            return View(DBHelper.GetByMNV(id));
         }
         public IActionResult Update()
         {
             return View();
         }
         [HttpPost]
-        public bool Delete(string MaNhanVien)
+        public int Delete(string MaNhanVien, int pageIndex = 0)
         {
             DBHelper.Delete(MaNhanVien);
-            return true;
+            return pageIndex;
         }
         public IActionResult Report()
         {
             return Content("dang xay dung");
         }
        public StaffController()
-        {
-        }
-        
-        public NhanVien GetByMNV(string MNV)
-        {
-            NhanVien result = DBHelper.GetByMNV(MNV);
-
-                return result; 
-        }
+        {}
         public string XuLyTen(string name)
         {
             string result = "";
@@ -120,11 +114,15 @@ namespace MVCProject.Controllers
             }
             return result;
         }
-
+        public IActionResult PageNav(){
+            
+            return View();
+        }
 
         public IActionResult GetPage(int pageIndex)
         {
-            ViewBag.pageIndex = pageIndex;
+
+            ViewBag.pageIndex = pageIndex ;
             ViewBag.itemPerPage = itemPerPage;
             return View(DBHelper.Get());
         }

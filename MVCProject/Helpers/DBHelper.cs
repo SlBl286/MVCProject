@@ -14,15 +14,15 @@ namespace MVCProject.Helpers
     public static class DBHelper
     {
         private static readonly string connectionString = "HOST=127.0.0.1;Username=postgres;Password=220287;Database=MVCProject";
-        public static List<NhanVien> Get(string key = "")
+        public static List<NhanVien> Get(string key = null)
         {
             IEnumerable<NhanVien> nhanvien = null;
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
-                if (key == "")
+                if (key == null)
                     nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien order by MaNhanVien ASC");
                 else
-                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien where public.converttvkdau(HoTen) like '%' || public.converttvkdau(@key) || '%' ", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
             }
             return nhanvien.ToList();
         }

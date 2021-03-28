@@ -15,16 +15,16 @@
             success: function (json) {
                 var a = json;
                 if (a == true) {
-                    $("SubmitBtn").prop("disabled", true);
+                    $("#SubmitBtn").prop("disabled", true);
                     $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
                     $("#HoTen").css("border-color", "red");
                     $("#ngaySinh").css("border-color", "red");
                 }
-                if (a == false) {
-                    $("SubmitBtn").prop('disabled', false);
+                else {
+                    $("#SubmitBtn").prop('disabled', false);
                     $("#ErrorMgs").text("");
                     $("#HoTen").css("border-color", "#ced4da");
-                    $("#NgaySinh").css("border-color", "#eff1f3");
+                    $("#NgaySinh").css("border-color", "#ced4da");
                 }
             },
             error: function (req, status, error) {
@@ -49,14 +49,13 @@
             success: function (json) {
                 var a = json;
                 if (a == true) {
-                    $("SubmitBtn").prop("disabled", true);
+                    $("#SubmitBtn").prop("disabled", true);
                     $("#ErrorMgs").text("Nhân Viên Đã Tồn Tại");
                     $("#HoTen").css("border-color", "red");
                     $("#NgaySinh").css("border-color", "red");
                 } 
-                if (a == false) {
-                    $("SubmitBtn").prop('disabled', false);
-                    $("#CreateForm").unbind(event)
+                else {
+                    $("#SubmitBtn").prop("disabled", false);
                     $("#ErrorMgs").text("");
                     $("#HoTen").css("border-color", "ced4da");
                     $("#NgaySinh").css("border-color", "ced4da");
@@ -79,6 +78,7 @@
         DiaChi = $("#DiaChi").val();
         var ChucVu = $("#ChucVu").val();
         var SoNamCongTac = $("#SoNamCongTac").val();
+        if(MaNhanVien != null && HoTen != null && NgaySinh != null && ChucVu != null && SoNamCongTac != null  ){
             $.ajax({
                 type: "Post",
                 url: "/staff/create",
@@ -93,12 +93,26 @@
                         dataType: "text",
                         success: function (data) {
                             $(".close").trigger("click");
-                            $("#p-" + (pageIndex).toString()).trigger("click");
+                            $("#p-" + (pageIndex +1).toString() +" button").trigger("click");
                             $("#StaffTable").html(data);
+
                         },
                         error: function (req, status, error) {
                             console.log(error);
 
+                        }
+                    }); 
+                    $("#pagenav").empty();
+                    $.ajax({
+                        type: "Post",
+                        url: "/staff/pagenav",
+                        dataType: "text",
+                        success: function (data) {
+                            $("#pagenav").html(data);
+                        },
+                        error: function (req, status, error) {
+                            console.log(error);
+                
                         }
                     });
                 },
@@ -107,6 +121,9 @@
 
                 }
             });
+        }
+            
+                
         
     });
 });

@@ -43,8 +43,8 @@
         </td>
         <td>
             <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit", "staff", new { id = Model[i].MaNhanVien }, Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@i" ><i class="fas fa-trash-alt"></i> Xóa</button>
-            <div class="modal" id="NV-@i"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@i"><i class="fas fa-trash-alt"></i> Xóa</button>
+            <div class="modal" id="NV-@i" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -67,26 +67,4 @@
         </td>
     </tr>
 }
-
-<script>
-    $(".delBtn").click(function () {
-
-        var MaNhanVien = $(this).attr("id");
-
-        $.ajax({
-            type: "Post",
-            url: "/staff/delete",
-            data: { MaNhanVien: MaNhanVien },
-            dataType: "json",
-            success: function (json) {
-                $("#Huy-" + MaNhanVien).trigger("click");
-                $("#" + MaNhanVien).closest("tr").remove();
-            },
-            error: function (req, status, error) {
-                console.log(error);
-
-            }
-        });
-
-    });
-</script>
+<script src="~/js/staff/getpage.js"></script>
