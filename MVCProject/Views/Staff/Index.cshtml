@@ -5,7 +5,6 @@
 }
 @{ 
     var itemPerPage = ViewBag.itemPerPage;
-    var pageNunber = (int)Model.Count / itemPerPage;
 }
 
 <div>
@@ -50,9 +49,8 @@
     <tbody id="StaffTable">   
         </tbody>
 </table>
-<input type="number" id="pageNumber" value="@pageNunber" hidden />
+
 <div id="pagenav">
-    
 </div>
 
 @section Scripts {

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.Models;
-using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -20,9 +19,9 @@ namespace MVCProject.Helpers
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
                 if (key == null)
-                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien order by MaNhanVien ASC");
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien order by MaNhanVien ASC");
                 else
-                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
             }
             return nhanvien.ToList();
         }
@@ -32,7 +31,7 @@ namespace MVCProject.Helpers
             
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                    nhanvien = connection.Query<NhanVien>("SELECT * from NhanVien where MaNhanVien = @key ", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where MaNhanVien = @key ", new { key = key });
             }
             return nhanvien.First();
         }
@@ -52,7 +51,7 @@ namespace MVCProject.Helpers
         {
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                connection.Execute("Insert into NhanVien(MaNhanVien,HoTen,NgaySinh, SoDienThoai,DiaChi,ChucVu,SoNamCongTac) values(@maNhanVien,@hoTen,@ngaySinh,@soDienThoai,@diaChi,@chucVu,@soNamCongTac)",   new { nv.MaNhanVien,nv.HoTen,nv.NgaySinh,nv.SoDienThoai,nv.DiaChi,nv.ChucVu,nv.SoNamCongTac });
+                connection.Execute("Insert into Nhan_Vien(MaNhanVien,HoTen,NgaySinh, SoDienThoai,DiaChi,ChucVu,SoNamCongTac) values(@maNhanVien,@hoTen,@ngaySinh,@soDienThoai,@diaChi,@chucVu,@soNamCongTac)",   new { nv.MaNhanVien,nv.HoTen,nv.NgaySinh,nv.SoDienThoai,nv.DiaChi,nv.ChucVu,nv.SoNamCongTac });
 
             }
         }
@@ -60,7 +59,7 @@ namespace MVCProject.Helpers
         {
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                connection.Execute("Update NhanVien SET  HoTen = @hoTen ,NgaySinh = @ngaySinh, SoDienThoai = @soDienThoai,DiaChi = @diaChi,ChucVu = @chucVu,SoNamCongTac = @soNamCongTac WHERE MaNhanVien = @maNhanVien", new { nv.MaNhanVien, nv.HoTen, nv.NgaySinh, nv.SoDienThoai, nv.DiaChi, nv.ChucVu, nv.SoNamCongTac });
+                connection.Execute("Update Nhan_Vien SET  HoTen = @hoTen ,NgaySinh = @ngaySinh, SoDienThoai = @soDienThoai,DiaChi = @diaChi,ChucVu = @chucVu,SoNamCongTac = @soNamCongTac WHERE MaNhanVien = @maNhanVien", new { nv.MaNhanVien, nv.HoTen, nv.NgaySinh, nv.SoDienThoai, nv.DiaChi, nv.ChucVu, nv.SoNamCongTac });
 
             }
         }
@@ -68,7 +67,7 @@ namespace MVCProject.Helpers
         {
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                connection.Execute("Delete FROM  NhanVien where MaNhanVien = @maNhanVien", new { maNhanVien = maNhanVien});
+                connection.Execute("Delete FROM  Nhan_Vien where MaNhanVien = @maNhanVien", new { maNhanVien = maNhanVien});
 
             }
         }

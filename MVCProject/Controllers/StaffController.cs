@@ -4,8 +4,6 @@ using MVCProject.Helpers;
 using MVCProject.Models;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-
 
 namespace MVCProject.Controllers
 {
@@ -31,6 +29,9 @@ namespace MVCProject.Controllers
         {
             List<NhanVien> dsTim = DBHelper.Get(key);
             ViewBag.itemPerPage = itemPerPage;
+            if(key == ""){
+                 return View(DBHelper.Get());
+            } 
             return View(dsTim);
 
         }
@@ -114,7 +115,14 @@ namespace MVCProject.Controllers
             }
             return result;
         }
-        public IActionResult PageNav(){
+        public IActionResult PageNav(string currentPage = "p-1"){
+                if((int)DBHelper.Get().Count % itemPerPage == 0 ){
+                    ViewBag.currentPage = "p-" + (int)DBHelper.Get().Count / itemPerPage;
+                }
+                else{
+                    ViewBag.currentPage = currentPage;
+                }
+                ViewBag.pageNumber = (int)DBHelper.Get().Count / itemPerPage;
             
             return View();
         }

@@ -1,13 +1,18 @@
 $(document).ready(function () {
-    var currentPage = "p-1";
-    var value = parseInt(currentPage.substring(2)) - 1;
-    $("#startList").addClass("disabled");
     for (var i = parseInt($("#pageNumber").val()); i >=0; i--) {
         var li = "<li class='page-item' id='p-" + (i + 1).toString() + "'><button class='page-link'>" + (i + 1).toString() + "</button></li>";
         $("#startList").after(li);
     }
+    var currentPage = $("#currentPage").val();
+    var value = parseInt(currentPage.substring(2)) - 1;
     if(parseInt($("#pageNumber").val()) ==0){
         $("#startList").addClass("disabled");
+        $("#endList").addClass("disabled");
+    }
+    else if(value == 0) {
+        $("#startList").addClass("disabled");
+    }
+    else if(value == parseInt($("#pageNumber").val())){
         $("#endList").addClass("disabled");
     }
     $.ajax({

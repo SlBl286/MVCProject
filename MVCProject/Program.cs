@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using MVCProject.Helpers;
 namespace MVCProject
 {
     public class Program
@@ -18,6 +18,7 @@ namespace MVCProject
 
         public static void Main(string[] args)
         {
+            ExportExcelHelper.Export();
             CreateHostBuilder(args).Build().Run();
         }
 

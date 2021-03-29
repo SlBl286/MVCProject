@@ -1,20 +1,43 @@
 ﻿$(document).ready(function () {
+    var value = "p-1";
+    
+    $.ajax({
+        type: "Post",
+        url: "/staff/pagenav",
+        data: { currentPage : value },
+        dataType: "text",
+        success: function (data) {
+            $("#pagenav").html(data);
+        },
+        error: function (req, status, error) {
+            console.log(error);
+
+        }
+    });
     $("#SearchBox").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $.ajax({
-            type: "Post",
-            url: "/staff/search",
-            data: { key : value },
-            dataType: "text",
-            success: function (data) {
-                console.log(data)
-                $("#StaffTable").html(data);
-            },
-            error: function (req, status, error) {
-                console.log(error);
-
-            }
-        });
+        if(value == ""){
+            $("#pagenav").show();
+            $(".active").trigger("click");
+        }
+        else{
+            $("#pagenav").hide();  
+            $.ajax({
+                type: "Post",
+                url: "/staff/search",
+                data: { key : value },
+                dataType: "text",
+                success: function (data) {
+                        $("#StaffTable").html(data);
+                    
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+    
+                }
+            });
+        }
+        
     });
     
 });

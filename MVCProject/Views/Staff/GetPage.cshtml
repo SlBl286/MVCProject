@@ -32,7 +32,7 @@
         <td>
             @Model[i].SoDienThoai
         </td>
-        <td>
+        <td style="max-width: 200px;">
             @Model[i].DiaChi
         </td>
         <td>
@@ -43,8 +43,11 @@
         </td>
         <td>
             <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit", "staff", new { id = Model[i].MaNhanVien }, Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@i"><i class="fas fa-trash-alt"></i> Xóa</button>
-            <div class="modal" id="NV-@i" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@Model[i].MaNhanVien"><i class="fas fa-trash-alt"></i> Xóa</button>
+            <a href="#" class="demo">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+            <div class="modal" id="NV-@Model[i].MaNhanVien"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
