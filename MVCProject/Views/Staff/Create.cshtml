@@ -52,6 +52,16 @@
                 <input asp-for="SoNamCongTac" class="form-control" />
                 <span asp-validation-for="SoNamCongTac" class="text-danger"></span>
             </div>
+            <br>
+            <div class="form-group">
+                <select class="custom-select">
+                    <option selected>Chọn Phòng Ban</option>
+                    <option >Phòng Nhân Sự</option>
+                    <option >Chọn Phòng Ban</option>
+                    <option >Chọn Phòng Ban</option>
+                </select>
+            </div>
+            <br>
             <div class="form-group">
                 <button type="submit" class="btn btn-success" id="SubmitBtn" disabled>Thêm Mới</button>
                 <button class="btn btn-success" type="submit" id="SavingtBtn" disabled hidden>
@@ -59,6 +69,7 @@
                     Đang Lưu...
                 </button>
             </div>
+            
         </form>
 
     </div>

@@ -1,4 +1,10 @@
 ﻿$(document).ready(function(){
+    $("#delbtn1").click(function () {
+       setTimeout(function(){
+        $(".modal-backdrop").remove();  
+        $(".modal-backdrop").remove();  
+       },200); 
+    });
     $(".delBtn").click(function () {
         
         var MaNhanVien = $(this).attr("id");

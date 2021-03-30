@@ -43,7 +43,7 @@
         </td>
         <td>
             <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit", "staff", new { id = Model[i].MaNhanVien }, Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#NV-@Model[i].MaNhanVien"><i class="fas fa-trash-alt"></i> Xóa</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" id="delbtn1" data-target="#NV-@Model[i].MaNhanVien"><i class="fas fa-trash-alt"></i> Xóa</button>
             <a href="#" class="demo">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>

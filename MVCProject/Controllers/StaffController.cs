@@ -10,7 +10,7 @@ namespace MVCProject.Controllers
     
     public class StaffController : Controller
     {
-        private int itemPerPage = 8;
+        private readonly int itemPerPage = 8;
         [HttpGet]
         public IActionResult Index()
         {
