@@ -39,7 +39,21 @@
         }
         
     });
-    
+    $("#excelExport").click(function(){
+        $.ajax({
+            type: "Post",
+            url: "/staff/ExcelExport",
+            dataType: "json",
+            success: function (json) {
+                    console.log(json);
+                
+            },
+            error: function (req, status, error) {
+                console.log(error);
+
+            }
+        });
+    });
 });
 
 

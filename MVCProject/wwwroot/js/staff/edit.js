@@ -76,7 +76,7 @@
         var DiaChi = $("#DiaChi").val();    
         var ChucVu = $("#ChucVu").val();
         var SoNamCongTac = $("#SoNamCongTac").val();
-        var pageIndex = parseInt($(".active").parent().attr("id").substring(2));
+        var pageIndex = parseInt($(".active").parent().attr("id").substring(2) -1);
         $("#SubmitBtn").attr("hidden",true);
         $("#SavingtBtn").attr("hidden",false);
         setTimeout(function(){
@@ -124,7 +124,7 @@
                     }
                 });
             }
-        },1200)
+        },800)
         
     });
    

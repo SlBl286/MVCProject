@@ -134,7 +134,11 @@ namespace MVCProject.Controllers
             ViewBag.itemPerPage = itemPerPage;
             return View(DBHelper.Get());
         }
-
+        [HttpPost]
+        public bool ExcelExport(){
+            ExportExcelHelper.Export(DBHelper.Get());
+            return true;
+        }
         public bool IsDuplicatedStaff(NhanVien pnv)
         {
             pnv.HoTen = XuLyTen(pnv.HoTen);

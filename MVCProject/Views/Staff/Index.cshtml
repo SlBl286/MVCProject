@@ -14,7 +14,8 @@
     <h1>Danh Sách Nhân Viên</h1>
 </div>
 <div>
-        <button class="btn btn-success btn" onclick="showInPopup('@Url.Action("create","staff",null,Context.Request.Scheme)','THÊM NHÂN VIÊN')"><i class="fas fa-plus"></i> Thêm Nhân Viên</button>
+        <button class="btn btn-success " onclick="showInPopup('@Url.Action("create","staff",null,Context.Request.Scheme)','THÊM NHÂN VIÊN')"><i class="fas fa-plus"></i> Thêm Nhân Viên</button>
+        <button class="btn btn btn-outline-success float-right" id="excelExport"><i class="fas fa-file-excel"></i> Xuất File Excel</button>
 </div>
 <br />
 <table  class="table table-striped table-hover">

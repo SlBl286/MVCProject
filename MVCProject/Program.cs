@@ -18,7 +18,6 @@ namespace MVCProject
 
         public static void Main(string[] args)
         {
-            ExportExcelHelper.Export();
             CreateHostBuilder(args).Build().Run();
         }
 
