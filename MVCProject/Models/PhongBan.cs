@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 namespace MVCProject.Models
 {
     public class PhongBan
     {
+        public int id {get;set;}
         [Display(Name = "Tên Phòng")]
         [Required(ErrorMessage = "Không được bỏ trống tên")]  
         public string TenPhongBan { get; set; }
@@ -17,4 +19,5 @@ namespace MVCProject.Models
             this.TenPhongBan = TenPhongBan;
         }
     }
+    
 }

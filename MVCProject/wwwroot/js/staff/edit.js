@@ -76,6 +76,7 @@
         var DiaChi = $("#DiaChi").val();    
         var ChucVu = $("#ChucVu").val();
         var SoNamCongTac = $("#SoNamCongTac").val();
+        var PhongBan_Id = parseInt($("#PhongBan_Id").val());
         var pageIndex = parseInt($(".active").parent().attr("id").substring(2) -1);
         $("#SubmitBtn").attr("hidden",true);
         $("#SavingtBtn").attr("hidden",false);
@@ -84,7 +85,7 @@
                 $.ajax({
                     type: "Post",
                     url: "/staff/edit",
-                    data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac },
+                    data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac,PhongBan_Id:PhongBan_Id },
                     dataType: "json",
                     success: function (json) {
                         $.ajax({

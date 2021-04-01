@@ -27,7 +27,8 @@ namespace MVCProject.Models
         [Display(Name = "Số Năm Công Tác")]
         [Required(ErrorMessage = "Hãy Điền Số Năm Công Tác")]
         public int SoNamCongTac { get; set; }
-        //public int MaPhongBan {get;set;}
+        [Display(Name = "Phòng Ban")]
+        public int PhongBan_Id {get;set;}
 
         public NhanVien() { }
         public NhanVien(string maNhanVien, string hoTen, DateTime ngaySinh, string soDienThoai, string diaChi, string chucVu, int soNamCongTac)

@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVCProject.Helpers
 {
-    public static class GeneralHelper
+    public static class GHelper
     {
         public static string XuLyTen(string name)
         {

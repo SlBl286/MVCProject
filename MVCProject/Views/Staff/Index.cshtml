@@ -16,11 +16,8 @@
     <h1>Danh Sách Nhân Viên</h1>
 </div>
 <div>
-        <select class="custom-select" style="width:10vw;">
+        <select class="custom-select" style="width:20vw;" asp-items="@(new SelectList(@ViewBag.dsPhongBan,"id","TenPhongBan"))">
             <option selected>-- Tất Cả --</option>
-            <option value="1">-- Phòng Nhân Sự --</option>
-            <option value="2">-- Phòng --</option>
-            <option value="3">-- Phòng --</option>
         </select>
         <button class="btn btn btn-outline-success float-right" id="excelExport"><i class="fas fa-file-excel"></i> Xuất File Excel</button>
         

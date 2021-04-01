@@ -25,6 +25,17 @@ namespace MVCProject.Helpers
             }
             return nhanvien.ToList();
         }
+        public static List<PhongBan> GetDP(string key = null){
+            IEnumerable<PhongBan> dsPhongBan = null;
+            using (var connection = new NpgsqlConnection(connectionString)){
+                connection.Open();
+                if (key == null)
+                    dsPhongBan = connection.Query<PhongBan>("SELECT * from Phong_ban order by id ASC");
+                else    
+                    dsPhongBan = connection.Query<PhongBan>("SELECT * from Phong_ban where lower(unaccent(Ten_Phong_Ban)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
+            }
+            return dsPhongBan.ToList();
+        }
         public static NhanVien GetByMNV(string key = "")
         {
             IEnumerable<NhanVien> nhanvien = null;
@@ -34,6 +45,16 @@ namespace MVCProject.Helpers
                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where MaNhanVien = @key ", new { key = key });
             }
             return nhanvien.First();
+        }
+        public static PhongBan GetbyMDP(int key = 0)
+        {
+            IEnumerable<PhongBan> phongBan = null;
+            
+            using (var connection = new NpgsqlConnection(connectionString)) {
+                connection.Open();
+                    phongBan = connection.Query<PhongBan>("SELECT * from phong_ban where id = @key ", new { key = key });
+            }
+            return phongBan.First();
         }
         public static int GetTheLastID()
         {
@@ -55,12 +76,27 @@ namespace MVCProject.Helpers
 
             }
         }
+        public static void CreatePB(PhongBan pb)
+        {
+            using (var connection = new NpgsqlConnection(connectionString)) {
+                connection.Open();
+               connection.Execute("INSERT INTO phong_ban(TenPhongBan) VALUES (@tenPhongBan);",   new { pb.TenPhongBan });
+
+            }
+        }
         public static void Update(NhanVien nv)
         {
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                connection.Execute("Update Nhan_Vien SET  HoTen = @hoTen ,NgaySinh = @ngaySinh, SoDienThoai = @soDienThoai,DiaChi = @diaChi,ChucVu = @chucVu,SoNamCongTac = @soNamCongTac WHERE MaNhanVien = @maNhanVien", new { nv.MaNhanVien, nv.HoTen, nv.NgaySinh, nv.SoDienThoai, nv.DiaChi, nv.ChucVu, nv.SoNamCongTac });
+                connection.Execute("Update Nhan_Vien SET  HoTen = @hoTen ,NgaySinh = @ngaySinh, SoDienThoai = @soDienThoai,DiaChi = @diaChi,ChucVu = @chucVu,SoNamCongTac = @soNamCongTac,phongban_id = (Select id from Phong_ban where id = @PhongBan_Id) WHERE MaNhanVien = @MaNhanVien", new { nv.HoTen, nv.NgaySinh, nv.SoDienThoai, nv.DiaChi, nv.ChucVu, nv.SoNamCongTac,nv.PhongBan_Id, nv.MaNhanVien });
 
+            }
+        }
+        public static void UpdateDP(PhongBan pb)
+        {
+            using (var connection = new NpgsqlConnection(connectionString)) {
+                connection.Open();
+                connection.Execute("Update phong_ban SET  TenPhongBan = @TenPhongBan where id = @id", new {pb.id, pb.TenPhongBan});
             }
         }
         public static void Delete(string maNhanVien)

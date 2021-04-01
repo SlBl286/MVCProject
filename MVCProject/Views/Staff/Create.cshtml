@@ -52,13 +52,10 @@
                 <input asp-for="SoNamCongTac" class="form-control" />
                 <span asp-validation-for="SoNamCongTac" class="text-danger"></span>
             </div>
-            <br>
             <div class="form-group">
-                <select class="custom-select">
+                <label asp-for="PhongBan_Id" class="control-label"></label>
+                <select class="custom-select" asp-for="PhongBan_Id" asp-items="@(new SelectList(@ViewBag.dsPhongBan,"id","TenPhongBan"))">
                     <option selected>Chọn Phòng Ban</option>
-                    <option >Phòng Nhân Sự</option>
-                    <option >Chọn Phòng Ban</option>
-                    <option >Chọn Phòng Ban</option>
                 </select>
             </div>
             <br>
