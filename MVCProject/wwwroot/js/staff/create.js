@@ -93,7 +93,6 @@
                             type: "Post",
                             url: "/staff/getpage",
                             data: { pageIndex: pageIndex },
-                            dataType: "text",
                             success: function (data) {
                                 $(".close").trigger("click");
                                 $("#p-" + (pageIndex +1).toString() +" button").trigger("click");

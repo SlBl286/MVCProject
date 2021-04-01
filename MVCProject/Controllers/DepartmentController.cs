@@ -15,5 +15,9 @@ namespace MVCProject.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Create(PhongBan newItem){
+            return View();
+        }
     }
 }
