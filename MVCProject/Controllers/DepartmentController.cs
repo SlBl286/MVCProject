@@ -77,5 +77,11 @@ namespace MVCProject.Controllers
             
             return View();
         }
+        [HttpPost]
+        public int Delete(int id, int pageIndex = 0)
+        {
+            DBHelper.DeleteDP(id);
+            return pageIndex;
+        }
     }
 }

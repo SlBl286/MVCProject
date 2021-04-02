@@ -7,7 +7,7 @@
     });
     $(".delBtn").click(function () {
         
-        var MaPhongBan = $(this).attr("id");
+        var MaPhongBan = parseInt($(this).attr("id"));
         $("#NV-" + MaPhongBan).modal('toggle');
         $(".modal-backdrop").remove();  
         console.log(MaPhongBan);
@@ -15,11 +15,11 @@
         $.ajax({
             type: "Post",
             url: "/department/delete",
-            data: { MaPhongBan: MaPhongBan},
+            data: { id: MaPhongBan},
             dataType: "json",
             success: function (json) {
                 var delCurrentPage = "p-" + pageIndex.toString();
-                $("#" + MaNhanVien).closest("tr").remove();
+                $("#" + MaPhongBan).closest("tr").remove();
                 $("#pagenav").empty();    
                 $.ajax({
                     type: "Post",

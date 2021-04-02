@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function () {   
     for (var i = parseInt($("#pageNumber").val()); i >=0; i--) {
         var li = "<li class='page-item' id='p-" + (i + 1).toString() + "'><button class='page-link'>" + (i + 1).toString() + "</button></li>";
         $("#startList").after(li);
     }
     var currentPage = $("#currentPage").val();
     var value = parseInt(currentPage.substring(2)) - 1;
-    if(parseInt($("#pageNumber").val()) ==0){
+    if(parseInt($("#pageNumber").val()) == 0){
         $("#startList").addClass("disabled");
         $("#endList").addClass("disabled");
     }
@@ -15,26 +15,12 @@ $(document).ready(function () {
     else if(value == parseInt($("#pageNumber").val())){
         $("#endList").addClass("disabled");
     }
-    $.ajax({
-        type: "Post",
-        url: "/staff/GetPage",
-        data: { pageIndex: parseInt(value) },
-        dataType: "text",
-        success: function (data) {
-            $("#StaffTable").html(data);
-        },
-        error: function (req, status, error) {
-            console.log(error);
-
-        }
-    });
     
     $("#" + currentPage + " button").addClass("bg-primary text-white active");
-    
+    console.log( parseInt($("#pageNumber").val()), currentPage);
     $("li button").click(function () {
         $("#" + currentPage + " button").removeClass("bg-primary text-white active");
         currentPage = $(this).parent().attr("id");
-        $(this).addClass("bg-primary text-white active");
         var pageIndex = parseInt(currentPage.substring(2)) - 1;
         if (pageIndex == 0) {
             $("#startList").addClass("disabled");
@@ -50,11 +36,11 @@ $(document).ready(function () {
         }
         $.ajax({
             type: "Post",
-            url: "/staff/GetPage",
-            data: { pageIndex: parseInt(pageIndex) },
+            url: "/staff/_table",
+            data: {pageNumber:parseInt($("#pageNumber").val()), currentPage:currentPage },
             dataType: "text",
             success: function (data) {
-                $("#StaffTable").html(data);
+                $("#tablePartial").html(data);
             },
             error: function (req, status, error) {
                 console.log(error);
@@ -69,7 +55,6 @@ $(document).ready(function () {
 
         $("#" + currentPage + " button").removeClass("bg-primary text-white active");
         currentPage = currentPage.substring(0, 2) + (parseInt(currentPage.substring(2)) -1).toString();
-        $("#" + currentPage + " button").addClass("bg-primary text-white active");
         var pageIndex = parseInt(currentPage.substring(2)) - 1;
         if (pageIndex == 0) {
             $("#startList").addClass("disabled");
@@ -85,11 +70,11 @@ $(document).ready(function () {
         }
         $.ajax({
             type: "Post",
-            url: "/staff/GetPage",
-            data: { pageIndex: parseInt(pageIndex) },
+            url: "/staff/_table",
+            data: {pageNumber:parseInt($("#pageNumber").val()), currentPage:currentPage },
             dataType: "text",
             success: function (data) {
-                $("#StaffTable").html(data);
+                $("#tablePartial").html(data);
             },
             error: function (req, status, error) {
                 console.log(error);
@@ -102,7 +87,6 @@ $(document).ready(function () {
 
         $("#" + currentPage + " button").removeClass("bg-primary text-white active");
         currentPage = currentPage.substring(0, 2) + (parseInt(currentPage.substring(2)) + 1).toString();
-        $("#" + currentPage + " button").addClass("bg-primary text-white active");
         var pageIndex = parseInt(currentPage.substring(2)) - 1;
         if (pageIndex == 0) {
             $("#startList").addClass("disabled");
@@ -118,20 +102,54 @@ $(document).ready(function () {
         }
         $.ajax({
             type: "Post",
-            url: "/staff/GetPage",
-            data: { pageIndex: parseInt(pageIndex) },
+            url: "/staff/_table",
+            data: {pageNumber:parseInt($("#pageNumber").val()) , currentPage:currentPage,list:list},
             dataType: "text",
             success: function (data) {
-                $("#StaffTable").html(data);
+                $("#tablePartial").html(data);
             },
             error: function (req, status, error) {
                 console.log(error);
-
             }
         });
 
     });
+     $(".delBtn").click(function () {
+         
+         var MaNhanVien = $(this).attr("id");
+         $("#NV-" + MaNhanVien).modal('toggle');
+         $(".modal-backdrop").remove();  
+         console.log(MaNhanVien);
+         var pageIndex = parseInt($(".active").parent().attr("id").substring(2));
+         $.ajax({
+             type: "Post",
+             url: "/staff/delete",
+             data: { MaNhanVien: MaNhanVien},
+             dataType: "json",
+             success: function (json) {
+                 var delCurrentPage = "p-" + (pageIndex+1).toString();
+                 $("#" + MaNhanVien).closest("tr").remove();  
+                 $.ajax({
+                     type: "Post",
+                     url: "/staff/_table",
+                     data: {pageNumber:parseInt($("#pageNumber").val()), currentPage : delCurrentPage,list:list },
+                     dataType: "text",
+                     success: function (data) {
+                         $("#tablePartial").html(data);
+                     },
+                     error: function (req, status, error) {
+                         console.log(error);
+             
+                     }
+                 });
+ 
+             },
+             error: function (req, status, error) {
+                 console.log(error);
+     
+             }
+         });
+         
+     
+     });
 });
-
-
-  

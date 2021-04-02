@@ -78,6 +78,7 @@
         DiaChi = $("#DiaChi").val();
         var ChucVu = $("#ChucVu").val();
         var SoNamCongTac = $("#SoNamCongTac").val();
+        var PhongBan_Id = parseInt($("#PhongBan_Id").val());
         $("#SubmitBtn").attr("hidden",true);
         $("#SavingtBtn").attr("hidden",false);
         setTimeout(function(){
@@ -85,18 +86,18 @@
                 $.ajax({
                     type: "Post",
                     url: "/staff/create",
-                    data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac },
+                    data: { MaNhanVien: MaNhanVien, HoTen: HoTen, NgaySinh: NgaySinh, SoDienThoai: SoDienThoai, DiaChi: DiaChi, ChucVu: ChucVu, SoNamCongTac: SoNamCongTac,PhongBan_Id:PhongBan_Id },
                     dataType: "json",
                     success: function (json) {
                         var pageIndex = json;
+                        var CurrentPage = "p-"+(pageIndex+1).toString()
                         $.ajax({
                             type: "Post",
-                            url: "/staff/getpage",
-                            data: { pageIndex: pageIndex },
+                            url: "/staff/_table",
+                            data: {pageNumber:parseInt($("#pageNumber").val()), currentPage : CurrentPage },
                             success: function (data) {
                                 $(".close").trigger("click");
-                                $("#p-" + (pageIndex +1).toString() +" button").trigger("click");
-                                $("#StaffTable").html(data);
+                                $("#tablePartial").html(data);
     
                             },
                             error: function (req, status, error) {
@@ -104,27 +105,13 @@
     
                             }
                         }); 
-                        var createCurrentPage = $("#endList").prev().attr("id");
-                        $("#pagenav").empty();    
-                        $.ajax({
-                            type: "Post",
-                            url: "/staff/pagenav",
-                            data: {currentPage : createCurrentPage },
-                            dataType: "text",
-                            success: function (data) {
-                                $("#pagenav").html(data);
-                            },
-                            error: function (req, status, error) {
-                                console.log(error);
-                    
-                            }
-                        });
                     },
                     error: function (req, status, error) {
                         console.log(error);
-    
-                    }
-                });
+
+                    } 
+                }); 
+                        
             }
         },800)
   

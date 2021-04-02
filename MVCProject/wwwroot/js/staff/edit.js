@@ -77,7 +77,7 @@
         var ChucVu = $("#ChucVu").val();
         var SoNamCongTac = $("#SoNamCongTac").val();
         var PhongBan_Id = parseInt($("#PhongBan_Id").val());
-        var pageIndex = parseInt($(".active").parent().attr("id").substring(2) -1);
+        var currentPage = $(".active").parent().attr("id");
         $("#SubmitBtn").attr("hidden",true);
         $("#SavingtBtn").attr("hidden",false);
         setTimeout(function(){
@@ -90,34 +90,18 @@
                     success: function (json) {
                         $.ajax({
                             type: "Post",
-                            url: "/staff/GetPage",
-                            data: { pageIndex: pageIndex },
+                            url: "/staff/_table",
+                            data: {pageNumber:parseInt($("#pageNumber").val()), currentPage : currentPage },
                             dataType: "text",
                             success: function (data) {
-                                console.log(pageIndex);
                                 $(".close").trigger("click");
-                                $("#StaffTable").html(data);
+                                $("#tablePartial").html(data);
                             },
                             error: function (req, status, error) {
                                 console.log(error);
         
                             }
                         });
-                        var createCurrentPage = $(".active").parent().attr("id");
-                            $("#pagenav").empty();    
-                            $.ajax({
-                                type: "Post",
-                                url: "/staff/pagenav",
-                                data: {currentPage : createCurrentPage },
-                                dataType: "text",
-                                success: function (data) {
-                                    $("#pagenav").html(data);
-                                },
-                                error: function (req, status, error) {
-                                    console.log(error);
-                        
-                                }
-                            });
                     },
                     error: function (req, status, error) {
                         console.log(error);

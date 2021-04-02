@@ -12,29 +12,39 @@ namespace MVCProject.Controllers
     {
         private readonly int itemPerPage = 8;
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int phongban_id=0)
         {
+            ViewBag.PhongBanId = phongban_id;
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
-            ViewBag.itemPerPage = itemPerPage;
-            return View();
+            ViewBag.pageNumberIndex = (int)DBHelper.Get().Count/ itemPerPage;
+            return View(DBHelper.Get());
         }
         [HttpPost]
         public IActionResult Index( string key = "")
         {
-
+            
             return View(DBHelper.Get(key));
 
         }
         [HttpPost]
         public IActionResult Search(string key = "")
         {
+            
             List<NhanVien> dsTim = DBHelper.Get(key);
+            ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.itemPerPage = itemPerPage;
-            if(key == ""){
-                 return View(DBHelper.Get());
-            } 
-            return View(dsTim);
+            ViewBag.pageNumber = (int)dsTim.Count/ itemPerPage;
+            ViewBag.currentPage = "p-1";
+            return _Table((int)dsTim.Count/ itemPerPage,"p-1",dsTim);
 
+        }
+        public IActionResult DepartmentStaffList(int PhongBanId){
+            List<NhanVien> dsTim = DBHelper.GetStaffByDP(PhongBanId);
+            ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
+            ViewBag.itemPerPage = itemPerPage;
+            ViewBag.pageNumber = (int)dsTim.Count/ itemPerPage;
+            ViewBag.currentPage = "p-1";
+            return _Table((int)dsTim.Count/ itemPerPage,"p-1",dsTim);
         }
         [HttpPost]
         public int Create(NhanVien newItem = null)
@@ -90,24 +100,14 @@ namespace MVCProject.Controllers
         }
        public StaffController()
         {}
-        public IActionResult PageNav(string currentPage = "p-1"){
-                if((int)DBHelper.Get().Count % itemPerPage == 0 ){
-                    ViewBag.currentPage = "p-" + (int)DBHelper.Get().Count / itemPerPage;
-                }
-                else{
-                    ViewBag.currentPage = currentPage;
-                }
-                ViewBag.pageNumber = (int)DBHelper.Get().Count / itemPerPage;
-            
-            return View();
-        }
-
-        public IActionResult GetPage(int pageIndex)
-        {
-
-            ViewBag.pageIndex = pageIndex ;
+        public IActionResult _Table(int pageNumber,string currentPage = "p-1",List<NhanVien> dsNhanVien = null){
+            if(dsNhanVien.Count == 0) dsNhanVien = DBHelper.Get();
+            ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.itemPerPage = itemPerPage;
-            return View(DBHelper.Get());
+            ViewBag.pageNumber = pageNumber;
+            ViewBag.currentPage = currentPage;
+            ViewBag.pageIndex = Convert.ToInt32(ViewBag.currentPage.Substring(2))-1;
+            return PartialView("_Table",dsNhanVien);
         }
         [HttpPost]
         public bool ExcelExport(){

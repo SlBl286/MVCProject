@@ -27,7 +27,7 @@
         <td style="text-align: center;">     
             <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit", "department", new { id = (int)@Model[i].id }, Context.Request.Scheme)', 'Sửa Thông tin Phòng Ban')"><i class="fas fa-pen"></i> Sửa</button>
             <button type="button" class="btn btn-warning" data-toggle="modal" id="delbtn1" data-target="#NV-@i"><i class="fas fa-trash-alt"></i> Xóa</button>
-            <a class="btn btn-secondary" href="/staff/index"><i class="far fa-list-alt"></i> Danh Sách Nhân Viên</a>
+            <a class="btn btn-secondary" href="/staff/index?phongban_id=@Model[i].id"><i class="far fa-list-alt"></i> Danh Sách Nhân Viên</a>
             <a href="#" class="demo">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>

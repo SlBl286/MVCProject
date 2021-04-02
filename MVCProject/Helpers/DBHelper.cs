@@ -18,10 +18,22 @@ namespace MVCProject.Helpers
             IEnumerable<NhanVien> nhanvien = null;
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
-                if (key == null)
+                if (key == null || key == "")
                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien order by MaNhanVien ASC");
                 else
                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
+            }
+            return nhanvien.ToList();
+        }
+        public static List<NhanVien> GetStaffByDP(int key = 0)
+        {
+            IEnumerable<NhanVien> nhanvien = null;
+            using (var connection = new NpgsqlConnection(connectionString)){
+                connection.Open();
+                if (key == 0)
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien order by MaNhanVien ASC");
+                else
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @key ", new { key = key });
             }
             return nhanvien.ToList();
         }
@@ -56,6 +68,7 @@ namespace MVCProject.Helpers
             }
             return phongBan.First();
         }
+        
         public static int GetTheLastID()
         {
             
@@ -72,7 +85,7 @@ namespace MVCProject.Helpers
         {
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                connection.Execute("Insert into Nhan_Vien(MaNhanVien,HoTen,NgaySinh, SoDienThoai,DiaChi,ChucVu,SoNamCongTac) values(@maNhanVien,@hoTen,@ngaySinh,@soDienThoai,@diaChi,@chucVu,@soNamCongTac)",   new { nv.MaNhanVien,nv.HoTen,nv.NgaySinh,nv.SoDienThoai,nv.DiaChi,nv.ChucVu,nv.SoNamCongTac });
+                connection.Execute("Insert into Nhan_Vien(MaNhanVien,HoTen,NgaySinh, SoDienThoai,DiaChi,ChucVu,SoNamCongTac,phongban_id) values(@maNhanVien,@hoTen,@ngaySinh,@soDienThoai,@diaChi,@chucVu,@soNamCongTac,@phongban_id)",   new { nv.MaNhanVien,nv.HoTen,nv.NgaySinh,nv.SoDienThoai,nv.DiaChi,nv.ChucVu,nv.SoNamCongTac,nv.PhongBan_Id });
 
             }
         }
@@ -104,6 +117,14 @@ namespace MVCProject.Helpers
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
                 connection.Execute("Delete FROM  Nhan_Vien where MaNhanVien = @maNhanVien", new { maNhanVien = maNhanVien});
+
+            }
+        }
+        public static void DeleteDP(int id)
+        {
+            using (var connection = new NpgsqlConnection(connectionString)) {
+                connection.Open();
+                connection.Execute("Delete FROM  phong_ban where id = @id", new { id = id});
 
             }
         }

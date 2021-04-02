@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Danh Sách Nhân Viên";
 }
-@{ 
-    var itemPerPage = ViewBag.itemPerPage;
-}
+<input type="number" id="PhongBanId" value="@ViewBag.PhongBanId" hidden />
 <button class="btn btn-success " onclick="showInPopup('@Url.Action("create","staff",null,Context.Request.Scheme)','THÊM NHÂN VIÊN')"><i class="fas fa-plus"></i> Thêm Nhân Viên</button>
 <br />
 <br />
@@ -13,22 +11,15 @@
     <div>
         <input id="SearchBox" type="search" class="form-control rounded" placeholder="Tên Hoặc Địa Chỉ Cần Tìm" aria-label="Search" aria-describedby="search-addon" />
         <br />
-        <select class="custom-select" style="width:25vw;">
+        <select class="custom-select" style="width:25vw;"  asp-items="@(new SelectList(@Model,"ChucVu","ChucVu"))">
             <option value="0" selected>-- Chức Vụ--</option>
         </select>
-        <div class="input-group mb-3  float-right" style="width:30vw">
-        <div class="input-group-prepend">
-            <select class="custom-select" style="width:7vw;">
-                <option value="0" selected>-- So Sánh --</option>
-                <option value="=" >=</option>
-                <option value="=>" >>=</option>
-                <option value="<=" ><=</option>
-                <option value=">" >></option>
-                <option value="<=>" ><</option>
-            </select>
+        <div class="float-right">
+            <label for="customRange1" class="form-label">Số Năm Công Tác</label>
+            <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange1" >
+            <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange2">
         </div>
-        <input type="number" class="form-control" id="soNamCongTac" placeholder="Số Năm Công Tác">
-        </div>
+        
     </div>
     <br />
     <h1>Danh Sách Nhân Viên</h1>
@@ -41,40 +32,9 @@
         
 </div>
 <br />
-<table  class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                MNV
-            </th>
-            <th>
-                Họ Tên
-            </th>
-            <th>
-                Ngày Sinh
-            </th>
-            <th>
-                Số điện thoại
-            </th>
-            <th>
-                Địa chỉ
-            </th>
-            <th>
-                Chức vụ
-            </th>
-            <th>
-                Số năm công tác
-            </th>
-            <th>
-                Tùy Chọn
-            </th>
-        </tr>
-    </thead>
-    <tbody id="StaffTable">   
-        </tbody>
-</table>
+<input type="number" id="pageNumberIndex" value="@ViewBag.pageNumberIndex" hidden />
+<div id="tablePartial">
 
-<div id="pagenav">
 </div>
 
 @section Scripts {

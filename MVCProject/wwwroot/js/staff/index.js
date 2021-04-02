@@ -1,13 +1,15 @@
 ﻿$(document).ready(function () {
     var value = "p-1";
-    
+    var PhongBan_Id = $("PhongBanID").val();
+    $("option").removeAttr('selected')
+    $('option[value ="'+PhongBan_Id+'"]').prop('selected', true)
     $.ajax({
         type: "Post",
-        url: "/staff/pagenav",
-        data: { currentPage : value },
+        url: "/staff/_table",
+        data: {pageNumber: parseInt($("#pageNumberIndex").val()), currentPage : value },
         dataType: "text",
         success: function (data) {
-            $("#pagenav").html(data);
+            $("#tablePartial").html(data);
         },
         error: function (req, status, error) {
             console.log(error);
@@ -16,27 +18,20 @@
     });
     $("#SearchBox").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        if(value == ""){
-            $("#pagenav").show();
-            $(".active").trigger("click");
-        }
-        else{
-            $("#pagenav").hide();  
-            $.ajax({
-                type: "Post",
-                url: "/staff/search",
-                data: { key : value },
-                dataType: "text",
-                success: function (data) {
-                        $("#StaffTable").html(data);
-                    
-                },
-                error: function (req, status, error) {
-                    console.log(error);
-    
-                }
-            });
-        }
+        $.ajax({
+            type: "Post",
+            url: "/staff/search",
+            data: { key : value },
+            dataType: "text",
+            success: function (data) {
+                $("#tablePartial").html(data);
+                
+            },
+            error: function (req, status, error) {
+                console.log(error);
+
+            }
+        });
         
     });
     $("#excelExport").click(function(){
@@ -60,6 +55,20 @@
             PhongBanId = parseInt($(this).val());
         });
         console.log(PhongBanId);
+        $.ajax({
+            type: "Post",
+            url: "/staff/DepartmentStaffList",
+            data: {PhongBanId :PhongBanId},
+            dataType: "text",
+            success: function (data) {
+                $("#tablePartial").html(data);
+                
+            },
+            error: function (req, status, error) {
+                console.log(error);
+
+            }
+        });
     });
 });
 
