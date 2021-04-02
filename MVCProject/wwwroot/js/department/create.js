@@ -25,9 +25,11 @@ $(document).ready(function () {
             }
         });
     });
-    $("#CreateForm").submit(function (event) {
+    
+    $("#SubmitBtn").click(function (event) {
         event.preventDefault();
         var TenPhongBan = $("#TenPhongBan").val();
+        console.log(TenPhongBan);
         $("#SubmitBtn").attr("hidden",true);
         $("#SavingtBtn").attr("hidden",false);
         setTimeout(function(){

@@ -54,6 +54,13 @@
             }
         });
     });
+    $("#chonPhongBan").change(function(){
+        var PhongBanId = null;
+        $("#chonPhongBan option:selected").each(function(){
+            PhongBanId = parseInt($(this).val());
+        });
+        console.log(PhongBanId);
+    });
 });
 
 
