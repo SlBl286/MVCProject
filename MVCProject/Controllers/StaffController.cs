@@ -20,7 +20,15 @@ namespace MVCProject.Controllers
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.pageNumberIndex = (int)DBHelper.Get().Count/ itemPerPage;
             HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(DBHelper.Get()));
-            return View(DBHelper.Get());
+            List<NhanVien> dsNhanvien = DBHelper.Get();
+            for(int i = 0; i < dsNhanvien.Count-1; i++){
+                for(int j = 1; j < dsNhanvien.Count; j++){
+                if(dsNhanvien[i].ChucVu == dsNhanvien[j].ChucVu && i != j ){
+                    dsNhanvien.RemoveAt(j);
+                }
+            }
+            }
+            return View(dsNhanvien);
         }
         [HttpPost]
         public IActionResult Index( string key = "")

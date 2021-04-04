@@ -12,8 +12,5 @@ showInPopup = (url, title) => {
             $("#CreateModal").modal('show');
         },
     });
-}
-$(document).ready(function(){
-    $('input').popup(); 
-    });
+};
     

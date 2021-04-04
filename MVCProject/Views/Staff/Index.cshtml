@@ -9,17 +9,19 @@
 <br />
 <div>
     <div>
-        <input id="SearchBox" type="search" class="form-control rounded" placeholder="Tên Hoặc Địa Chỉ Cần Tìm" aria-label="Search" aria-describedby="search-addon" />
-        <br />
-        <select class="custom-select" style="width:25vw;"  asp-items="@(new SelectList(@Model,"ChucVu","ChucVu"))">
-            <option value="0" selected>-- Chức Vụ--</option>
-        </select>
-        <div class="float-right">
-            <label for="customRange1" class="form-label">Số Năm Công Tác</label>
-            <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange1" >
-            <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange2">
-        </div>
-        
+            <input id="SearchBox" type="search" class="form-control rounded" placeholder="Tên Hoặc Địa Chỉ Cần Tìm" aria-label="Search" aria-describedby="search-addon"/>
+            <br />
+            <select class="custom-select" style="width:25vw;"  asp-items="@(new SelectList(@Model,"ChucVu","ChucVu"))">
+                <option value="0" selected>-- Chức Vụ--</option>
+            </select>
+            <div class="float-right">
+                <label for="customRange1" class="form-label">Số Năm Công Tác </label>
+                <span> từ :</span>
+                <input type="number" class="" id="minRage" style="width:5vw">
+                <span>tới :</span>
+                <input type="number" class="" id="maxRage" style="width:5vw">
+            </div>  
+          
     </div>
     <br />
     <h1>Danh Sách Nhân Viên</h1>
