@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.Helpers;
 using MVCProject.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -14,9 +15,11 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult Index(int phongban_id=0)
         {
+            HttpContext.Session.SetString("phongban_id",JsonConvert.SerializeObject(phongban_id));
             ViewBag.PhongBanId = phongban_id;
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.pageNumberIndex = (int)DBHelper.Get().Count/ itemPerPage;
+            HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(DBHelper.Get()));
             return View(DBHelper.Get());
         }
         [HttpPost]
@@ -29,21 +32,47 @@ namespace MVCProject.Controllers
         [HttpPost]
         public IActionResult Search(string key = "")
         {
+            if(key == null || key == "") HttpContext.Session.Remove("keySearch");
+            else HttpContext.Session.SetString("keySearch",JsonConvert.SerializeObject(key));
+            List<NhanVien> dsTim = null;
+            byte[] json;
+            if (HttpContext.Session.TryGetValue("phongban_id", out json)) {
+                    dsTim = DBHelper.Get(key,JsonConvert.DeserializeObject<int>(HttpContext.Session.GetString("phongban_id")));
+            }
+           else{
+               dsTim = DBHelper.Get(key);
+           }
             
-            List<NhanVien> dsTim = DBHelper.Get(key);
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.itemPerPage = itemPerPage;
-            ViewBag.pageNumber = (int)dsTim.Count/ itemPerPage;
+            if(dsTim == null){
+                ViewBag.pageNumber = (int)DBHelper.Get().Count/ itemPerPage;
+            }
+            else{
+                ViewBag.pageNumber = (int)dsTim.Count/ itemPerPage;
+            }
+            
             ViewBag.currentPage = "p-1";
+            HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(dsTim));
             return _Table((int)dsTim.Count/ itemPerPage,"p-1",dsTim);
 
         }
-        public IActionResult DepartmentStaffList(int PhongBanId){
-            List<NhanVien> dsTim = DBHelper.GetStaffByDP(PhongBanId);
+        public IActionResult DepartmentStaffList(int PhongBanId = 0){
+            HttpContext.Session.SetString("phongban_id",JsonConvert.SerializeObject(PhongBanId));
+            List<NhanVien> dsTim = null;
+            byte[] json;
+            if (HttpContext.Session.TryGetValue("keySearch", out json)) {
+                    dsTim = DBHelper.Get(JsonConvert.DeserializeObject<string>(HttpContext.Session.GetString("keySearch")),PhongBanId);
+            }
+            else{
+                dsTim = DBHelper.GetStaffByDP(PhongBanId);
+            }
+            
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.itemPerPage = itemPerPage;
-            ViewBag.pageNumber = (int)dsTim.Count/ itemPerPage;
+                ViewBag.pageNumber = (int)dsTim.Count/ itemPerPage;
             ViewBag.currentPage = "p-1";
+            HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(dsTim));
             return _Table((int)dsTim.Count/ itemPerPage,"p-1",dsTim);
         }
         [HttpPost]
@@ -51,6 +80,7 @@ namespace MVCProject.Controllers
         {
             newItem.HoTen = GHelper.XuLyTen(newItem.HoTen);
             newItem.DiaChi = GHelper.XuLyTen(newItem.DiaChi);
+            newItem.ChucVu = GHelper.XuLyTen(newItem.ChucVu);
             DBHelper.Create(newItem);
             if( ((int)DBHelper.Get().Count % itemPerPage == 0) && ((int)DBHelper.Get().Count / itemPerPage > 0)){
                 return (int)DBHelper.Get().Count / itemPerPage -1;
@@ -75,6 +105,7 @@ namespace MVCProject.Controllers
         {
             newItem.HoTen = GHelper.XuLyTen(newItem.HoTen);
             newItem.DiaChi = GHelper.XuLyTen(newItem.DiaChi);
+            newItem.ChucVu = GHelper.XuLyTen(newItem.ChucVu);
             DBHelper.Update(newItem);
             return pageIndex;
         }
@@ -101,7 +132,11 @@ namespace MVCProject.Controllers
        public StaffController()
         {}
         public IActionResult _Table(int pageNumber,string currentPage = "p-1",List<NhanVien> dsNhanVien = null){
-            if(dsNhanVien.Count == 0) dsNhanVien = DBHelper.Get();
+
+           byte[] json;
+           if (dsNhanVien.Count == 0 && HttpContext.Session.TryGetValue("currentStaffList", out json)) {
+                dsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("currentStaffList"));
+           }
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.itemPerPage = itemPerPage;
             ViewBag.pageNumber = pageNumber;
@@ -109,10 +144,15 @@ namespace MVCProject.Controllers
             ViewBag.pageIndex = Convert.ToInt32(ViewBag.currentPage.Substring(2))-1;
             return PartialView("_Table",dsNhanVien);
         }
-        [HttpPost]
-        public bool ExcelExport(){
-            ExportExcelHelper.Export(DBHelper.Get());
-            return true;
+        public FileResult DownloadFile(){
+            List<NhanVien> dsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("currentStaffList"));
+            ExportExcelHelper.Export(dsNhanVien);
+            string filePath = @"wwwroot/data/test.xlsx";
+            string fileName = "test.xlsx";
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+            return File(fileBytes, "application/force-download", fileName); 
         }
         public bool IsDuplicatedStaff(NhanVien pnv)
         {

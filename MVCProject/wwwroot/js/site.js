@@ -13,3 +13,7 @@ showInPopup = (url, title) => {
         },
     });
 }
+$(document).ready(function(){
+    $('input').popup(); 
+    });
+    

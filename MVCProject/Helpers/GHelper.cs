@@ -7,6 +7,7 @@ namespace MVCProject.Helpers
 {
     public static class GHelper
     {
+
         public static string XuLyTen(string name)
         {
             string result = "";

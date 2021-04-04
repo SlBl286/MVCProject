@@ -8,30 +8,19 @@ namespace MVCProject.Helpers
 {
     public static class ExportExcelHelper
     {
-        public static bool Export(List<NhanVien> ds = null){
-            FileInfo file = new FileInfo(@"wwwroot\data\test.xlsx");
-            if(file.Exists){
+        public static bool Export(List<NhanVien> ds){
+            FileInfo file = new FileInfo(@"wwwroot\data\Danh_Sach_Nhan_Vien.xlsx");
+                file.Delete();
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 using(var excelPackage = new ExcelPackage(file)){
                     
                     excelPackage.Workbook.Properties.Author = "Qý";
                     excelPackage.Workbook.Properties.Title = "Staff List";
                     excelPackage.Workbook.Properties.Created = DateTime.Now;
 
-                    var excelWorkSheet = excelPackage.Workbook.Worksheets["staffList"];
-
-
-                    excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns();
+                    var excelWorkSheet = excelPackage.Workbook.Worksheets.Add("staffList");
       
-                    double minimumSize = 10;
-                    excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns(minimumSize);
-         
-                    double maximumSize = 50;
-                    excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns(minimumSize, maximumSize);
-                
-                    for (int col = 1; col <= excelWorkSheet.Dimension.End.Column; col++)
-                    {
-                        excelWorkSheet.Column(col).Width = excelWorkSheet.Column(col).Width + 1;
-                    }
+                   
                     excelWorkSheet.Cells["A1"].Value = "Mã Nhân Viên";
                     excelWorkSheet.Cells["B1"].Value = "Họ Tên";
                     excelWorkSheet.Cells["C1"].Value = "Ngày Sinh";
@@ -42,25 +31,19 @@ namespace MVCProject.Helpers
                     excelWorkSheet.Cells["H1"].Value = "Phòng Ban";
                     excelWorkSheet.Cells["A2"].LoadFromCollection(ds);
                     excelWorkSheet.Cells["C2:C"+ (ds.Count+1).ToString()].Style.Numberformat.Format = "dd-MM-yyyy";
-
+                    double minimumSize = 10;
+                    excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns(minimumSize);
+         
+                    double maximumSize = 50;
+                    excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns(minimumSize, maximumSize);
+                
+                    for (int col = 1; col <= excelWorkSheet.Dimension.End.Column; col++)
+                    {
+                        excelWorkSheet.Column(col).Width = excelWorkSheet.Column(col).Width + 1;
+                    }
                     excelPackage.SaveAs(file);
 
-                }
-            }
-            else{
-                using(var excelPackage = new ExcelPackage()){
-                    excelPackage.Workbook.Properties.Author = "Qý";
-                    excelPackage.Workbook.Properties.Title = "Staff List";
-                    excelPackage.Workbook.Properties.Created = DateTime.Now;
-
-                    var excelWorkSheet = excelPackage.Workbook.Worksheets.Add("stafflist");
-
-                    excelWorkSheet.Cells["A1"].LoadFromCollection(ds);
-                    excelPackage.SaveAs(file);
-
-                }
-            }
-            
+                }       
             return true;
         }
     }

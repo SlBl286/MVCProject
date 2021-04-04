@@ -34,21 +34,7 @@
         });
         
     });
-    $("#excelExport").click(function(){
-        $.ajax({
-            type: "Post",
-            url: "/staff/ExcelExport",
-            dataType: "json",
-            success: function (json) {
-                    console.log(json);
-                
-            },
-            error: function (req, status, error) {
-                console.log(error);
 
-            }
-        });
-    });
     $("#chonPhongBan").change(function(){
         var PhongBanId = null;
         $("#chonPhongBan option:selected").each(function(){

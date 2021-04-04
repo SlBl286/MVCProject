@@ -103,7 +103,7 @@ $(document).ready(function () {
         $.ajax({
             type: "Post",
             url: "/staff/_table",
-            data: {pageNumber:parseInt($("#pageNumber").val()) , currentPage:currentPage,list:list},
+            data: {pageNumber:parseInt($("#pageNumber").val()) , currentPage:currentPage,},
             dataType: "text",
             success: function (data) {
                 $("#tablePartial").html(data);
@@ -132,10 +132,29 @@ $(document).ready(function () {
                  $.ajax({
                      type: "Post",
                      url: "/staff/_table",
-                     data: {pageNumber:parseInt($("#pageNumber").val()), currentPage : delCurrentPage,list:list },
+                     data: {pageNumber:parseInt($("#pageNumber").val()), currentPage : delCurrentPage},
                      dataType: "text",
                      success: function (data) {
                          $("#tablePartial").html(data);
+                         var PhongBanId = null;
+                                $("#chonPhongBan option:selected").each(function(){
+                                    PhongBanId = parseInt($(this).val());
+                                });
+                                console.log(PhongBanId);
+                                $.ajax({
+                                    type: "Post",
+                                    url: "/staff/DepartmentStaffList",
+                                    data: {PhongBanId :PhongBanId},
+                                    dataType: "text",
+                                    success: function (data) {
+                                        $("#tablePartial").html(data);
+                                        
+                                    },
+                                    error: function (req, status, error) {
+                                        console.log(error);
+
+                                    }
+                                });
                      },
                      error: function (req, status, error) {
                          console.log(error);

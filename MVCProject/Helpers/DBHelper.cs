@@ -13,15 +13,19 @@ namespace MVCProject.Helpers
     public static class DBHelper
     {
         private static readonly string connectionString = "HOST=127.0.0.1;Username=postgres;Password=220287;Database=MVCProject";
-        public static List<NhanVien> Get(string key = null)
+        public static List<NhanVien> Get(string key = null,int phongban_id = 0)
         {
             IEnumerable<NhanVien> nhanvien = null;
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
-                if (key == null || key == "")
+                if (key == null && phongban_id == 0)
                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien order by MaNhanVien ASC");
+                else if (key == null ||key == "" )
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @phongban_id order by MaNhanVien ASC",new { phongban_id = phongban_id});
+                else if (phongban_id == 0)
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' order by MaNhanVien ASC", new { key = key });
                 else
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
+                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') AND phongban_id = @phongban_id order by MaNhanVien ASC", new { key = key,phongban_id = phongban_id });
             }
             return nhanvien.ToList();
         }
@@ -33,7 +37,7 @@ namespace MVCProject.Helpers
                 if (key == 0)
                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien order by MaNhanVien ASC");
                 else
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @key ", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @key order by MaNhanVien ASC", new { key = key });
             }
             return nhanvien.ToList();
         }

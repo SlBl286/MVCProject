@@ -98,6 +98,25 @@
                             success: function (data) {
                                 $(".close").trigger("click");
                                 $("#tablePartial").html(data);
+                                var PhongBanId = null;
+                                $("#chonPhongBan option:selected").each(function(){
+                                    PhongBanId = parseInt($(this).val());
+                                });
+                                console.log(PhongBanId);
+                                $.ajax({
+                                    type: "Post",
+                                    url: "/staff/DepartmentStaffList",
+                                    data: {PhongBanId :PhongBanId},
+                                    dataType: "text",
+                                    success: function (data) {
+                                        $("#tablePartial").html(data);
+                                        
+                                    },
+                                    error: function (req, status, error) {
+                                        console.log(error);
+
+                                    }
+                                });
     
                             },
                             error: function (req, status, error) {
