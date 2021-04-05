@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCProject.Helpers;
 using MVCProject.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MVCProject.Controllers
 {
@@ -20,15 +22,9 @@ namespace MVCProject.Controllers
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.pageNumberIndex = (int)DBHelper.Get().Count/ itemPerPage;
             HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(DBHelper.Get()));
-            List<NhanVien> dsNhanvien = DBHelper.Get();
-            for(int i = 0; i < dsNhanvien.Count-1; i++){
-                for(int j = 1; j < dsNhanvien.Count; j++){
-                if(dsNhanvien[i].ChucVu == dsNhanvien[j].ChucVu && i != j ){
-                    dsNhanvien.RemoveAt(j);
-                }
-            }
-            }
-            return View(dsNhanvien);
+            List<string> dsChucVu = DBHelper.GetChucVu();
+            var selectListItems = dsChucVu.Select(x => new SelectListItem(){ Value = x, Text = x }).ToList();
+            return View(selectListItems);
         }
         [HttpPost]
         public IActionResult Index( string key = "")
@@ -41,7 +37,7 @@ namespace MVCProject.Controllers
         public IActionResult Search(string key = "")
         {
             if(key == null || key == "") HttpContext.Session.Remove("keySearch");
-            else HttpContext.Session.SetString("keySearch",JsonConvert.SerializeObject(key));
+            HttpContext.Session.SetString("keySearch",JsonConvert.SerializeObject(key));
             List<NhanVien> dsTim = null;
             byte[] json;
             if (HttpContext.Session.TryGetValue("phongban_id", out json)) {
@@ -65,6 +61,34 @@ namespace MVCProject.Controllers
             return _Table((int)dsTim.Count/ itemPerPage,"p-1",dsTim);
 
         }
+         public IActionResult AdvandSearch(string key = "",string chucVu = "",int min = 0,int max=0)
+        {
+            List<NhanVien> dsNhanVien = null;
+            byte[] json;
+            if (HttpContext.Session.TryGetValue("keySearch", out json)) {
+                    key = JsonConvert.DeserializeObject<string>(HttpContext.Session.GetString("keySearch"));
+            }
+            int phongBanId = 0;
+                
+            if (HttpContext.Session.TryGetValue("phongban_id", out json)) {
+                    phongBanId = JsonConvert.DeserializeObject<int>(HttpContext.Session.GetString("phongban_id"));
+            }
+                
+           dsNhanVien = DBHelper.AdvandSearch(key,phongBanId,chucVu,min,max);
+            ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
+            ViewBag.itemPerPage = itemPerPage;
+            if(dsNhanVien == null){
+                ViewBag.pageNumber = (int)DBHelper.Get().Count/ itemPerPage;
+            }
+            else{
+                ViewBag.pageNumber = (int)dsNhanVien.Count/ itemPerPage;
+            }
+            
+            ViewBag.currentPage = "p-1";
+            HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(dsNhanVien));
+            return _Table((int)dsNhanVien.Count/ itemPerPage,"p-1",dsNhanVien);
+
+        }
         public IActionResult DepartmentStaffList(int PhongBanId = 0){
             HttpContext.Session.SetString("phongban_id",JsonConvert.SerializeObject(PhongBanId));
             List<NhanVien> dsTim = null;
@@ -85,7 +109,7 @@ namespace MVCProject.Controllers
         }
         [HttpPost]
         public int Create(NhanVien newItem = null)
-        {
+        { 
             newItem.HoTen = GHelper.XuLyTen(newItem.HoTen);
             newItem.DiaChi = GHelper.XuLyTen(newItem.DiaChi);
             newItem.ChucVu = GHelper.XuLyTen(newItem.ChucVu);
@@ -154,9 +178,10 @@ namespace MVCProject.Controllers
         }
         public FileResult DownloadFile(){
             List<NhanVien> dsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("currentStaffList"));
+            
             ExportExcelHelper.Export(dsNhanVien);
-            string filePath = @"wwwroot/data/test.xlsx";
-            string fileName = "test.xlsx";
+            string filePath = @"wwwroot/data/Danh_Sach_Nhan_Vien.xlsx";
+            string fileName = "Danh_Sach_Nhan_Vien.xlsx";
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
 

@@ -35,9 +35,33 @@ namespace MVCProject.Helpers
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
                 if (key == 0)
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien order by MaNhanVien ASC");
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien  order by MaNhanVien ASC");
                 else
                     nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @key order by MaNhanVien ASC", new { key = key });
+            }
+            return nhanvien.ToList();
+        }
+        public static List<string> GetChucVu(){
+            IEnumerable<string> dsChucVu = null;
+            using (var connection = new NpgsqlConnection(connectionString)){
+                connection.Open();
+                dsChucVu = connection.Query<string>("SELECT DISTINCT chucvu	FROM nhan_vien");
+            }
+            return dsChucVu.ToList();
+        }
+        public static List<NhanVien> AdvandSearch(string keySearch,int phongBanId,string chucVu,int min,int max)
+        {
+            IEnumerable<NhanVien> nhanvien = null;
+            using (var connection = new NpgsqlConnection(connectionString)){
+                connection.Open();
+                if ((keySearch == null || keySearch == "") && phongBanId == 0) 
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC",new {chucVu = chucVu,min = min,max = max});
+                else if(keySearch == null || keySearch == "")
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
+                else if(phongBanId == 0)
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%')  and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,chucVu = chucVu,min = min,max = max});
+                else 
+                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongbanid and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
             }
             return nhanvien.ToList();
         }

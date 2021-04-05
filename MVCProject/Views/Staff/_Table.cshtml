@@ -32,6 +32,9 @@
             <th style="text-align: center;">
                 Số năm công tác
             </th>
+            <th style="text-align: center;">
+                Phòng Ban
+            </th>
             <th style="width:180px;text-align: center;">
                 Tùy Chọn
             </th>
@@ -69,6 +72,13 @@
             </td>
             <td style="text-align: center;">
                 @Model[i].SoNamCongTac
+            </td>
+            <td style="text-align: center;">
+                @for(int j = 0; j < @ViewBag.dsPhongBan.Count; j++){
+                    if(@Model[i].PhongBan_Id == @ViewBag.dsPhongBan[j].id ) {
+                        @ViewBag.dsPhongBan[j].TenPhongBan
+                    }
+                }
             </td>
             <td>
                 <button class="btn btn-info" onclick="showInPopup('@Url.Action("edit", "staff", new { id = Model[i].MaNhanVien }, Context.Request.Scheme)', 'Sửa Thông tin Nhân Viên')"><i class="fas fa-pen"></i> Sửa</button>

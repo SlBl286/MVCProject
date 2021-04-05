@@ -1,4 +1,4 @@
-﻿@model List<MVCProject.Models.NhanVien>
+﻿@model List<SelectListItem>
 @using MVCProject.Controllers
 @{
     ViewData["Title"] = "Danh Sách Nhân Viên";
@@ -9,18 +9,38 @@
 <br />
 <div>
     <div>
-            <input id="SearchBox" type="search" class="form-control rounded" placeholder="Tên Hoặc Địa Chỉ Cần Tìm" aria-label="Search" aria-describedby="search-addon"/>
-            <br />
-            <select class="custom-select" style="width:25vw;"  asp-items="@(new SelectList(@Model,"ChucVu","ChucVu"))">
-                <option value="0" selected>-- Chức Vụ--</option>
-            </select>
-            <div class="float-right">
-                <label for="customRange1" class="form-label">Số Năm Công Tác </label>
-                <span> từ :</span>
-                <input type="number" class="" id="minRage" style="width:5vw">
-                <span>tới :</span>
-                <input type="number" class="" id="maxRage" style="width:5vw">
-            </div>  
+            
+            <form class="form-row" action="advandSearch" method="post" id="advandSearch">
+                 <div class="col">
+                    <input id="SearchBox" type="search" class="form-control rounded" placeholder="Search" placeholder="Tên Hoặc Địa Chỉ Cần Tìm" aria-label="Search"
+                        aria-describedby="search-addon" />
+                 </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-outline-primary">Tìm Kiếm</button>
+                </div>
+                <br />
+                <div class="col">
+                    <label for="inputPassword4">Password</label>
+                    <select class="custom-select form-control col-2" id="chucVuSearch"  asp-items="@(new SelectList(@Model,"Value","Text"))">
+                        <option value="" selected>-- Tất Cả --</option>
+                    </select>
+                <div class="float-right ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Số Năm Công Tác</span>
+                        </div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Từ : </span>
+                        </div>
+                        <input type="text" class="form-control" id="minRange">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Đến : </span>
+                        </div>
+                        <input type="number" class="form-control" id="maxRange">
+                    </div> 
+                </div>
+                
+            </form>
+            
           
     </div>
     <br />
