@@ -35,32 +35,47 @@
         });
         
     });
-    $('#advandSearch').submit(function(event) {
+    $('#advandSearch').on('submit',function(event) {
         event.preventDefault();
         var key = $("#SearchBox").val();
         var chucVu = $("#chucVuSearch").val();
         var min = $("#minRange").val();
         var max = $("#maxRange").val();
-        $.ajax({
-            type: "Post",
-            url: "/staff/advandSearch",
-            data: {key:key,chucVu:chucVu,min: parseInt(min),max: parseInt(max) },
-            dataType: "text",
-            success: function (data) {
-                $("#tablePartial").html(data);
-            },
-            error: function (req, status, error) {
-                console.log(error);
-    
-            }
-        });
+        var valid = false;
+        if(parseInt(min) > parseInt(max)){
+            $("#ErrorMgs").text("min phải nhỏ hơn max");
+            $("#minRange").css("border-color", "red");
+            $("#maxRange").css("border-color", "red");
+            valid = false;
+        }
+        else{
+            $("#ErrorMgs").text("");
+            $("#minRange").css("border-color", "gray");
+            $("#maxRange").css("border-color", "gray");
+            valid = true;
+        }
+        if(valid == true){
+            $.ajax({
+                type: "Post",
+                url: "/staff/advandSearch",
+                data: {key:key,chucVu:chucVu,min: parseInt(min),max: parseInt(max) },
+                dataType: "text",
+                success: function (data) {
+                    $("#tablePartial").html(data);
+                },
+                error: function (req, status, error) {
+                    console.log(error);
+        
+                }
+            });
+        }
+        
     });
     $("#chonPhongBan").change(function(){
         var PhongBanId = null;
         $("#chonPhongBan option:selected").each(function(){
             PhongBanId = parseInt($(this).val());
         });
-        console.log(PhongBanId);
         $.ajax({
             type: "Post",
             url: "/staff/DepartmentStaffList",

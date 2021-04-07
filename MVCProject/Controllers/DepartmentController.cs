@@ -9,7 +9,7 @@ namespace MVCProject.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly int itemPerPage = 4;
+        private readonly int itemPerPage = 8;
 
         public DepartmentController()
         {

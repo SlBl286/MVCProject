@@ -67,7 +67,7 @@
             }
         });
     });
-    $("#CreateForm").submit(function (event) {
+    $("#CreateForm").on('submit',function (event) {
         event.preventDefault();
         var SoDienThoai = "";
         var DiaChi = "";

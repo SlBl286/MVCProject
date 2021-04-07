@@ -54,14 +54,38 @@ namespace MVCProject.Helpers
             IEnumerable<NhanVien> nhanvien = null;
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
-                if ((keySearch == null || keySearch == "") && phongBanId == 0) 
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC",new {chucVu = chucVu,min = min,max = max});
-                else if(keySearch == null || keySearch == "")
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
-                else if(phongBanId == 0)
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%')  and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,chucVu = chucVu,min = min,max = max});
-                else 
-                    nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongbanid and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
+                if ((keySearch == null || keySearch == "") && phongBanId == 0){
+                    if (chucVu == null || chucVu == ""){
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC",new {min = min,max = max});
+                    }
+                    else
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC",new {chucVu = chucVu,min = min,max = max});
+                }
+                    
+                else if(keySearch == null || keySearch == ""){
+                    if (chucVu == null || chucVu == ""){
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @phongban_id and sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,min = min,max = max});
+                    }
+                    else
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
+                }
+                    
+                else if(phongBanId == 0){
+                    if (chucVu == null || chucVu == ""){
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,min = min,max = max});
+                    }
+                    else
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%')  and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,chucVu = chucVu,min = min,max = max});
+                }
+                    
+                else{
+                    if (chucVu == null || chucVu == ""){
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongban_id AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,min = min,max = max});
+                    }
+                    else
+                        nhanvien = connection.Query<NhanVien>("SELECT * from Nhan_Vien where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongbanid and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
+                }
+                    
             }
             return nhanvien.ToList();
         }

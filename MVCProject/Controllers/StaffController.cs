@@ -73,8 +73,8 @@ namespace MVCProject.Controllers
             if (HttpContext.Session.TryGetValue("phongban_id", out json)) {
                     phongBanId = JsonConvert.DeserializeObject<int>(HttpContext.Session.GetString("phongban_id"));
             }
+                dsNhanVien = DBHelper.AdvandSearch(key,phongBanId,chucVu,min,max);
                 
-           dsNhanVien = DBHelper.AdvandSearch(key,phongBanId,chucVu,min,max);
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.itemPerPage = itemPerPage;
             if(dsNhanVien == null){
