@@ -140,7 +140,6 @@ $(document).ready(function () {
                                 $("#chonPhongBan option:selected").each(function(){
                                     PhongBanId = parseInt($(this).val());
                                 });
-                                console.log(PhongBanId);
                                 $.ajax({
                                     type: "Post",
                                     url: "/staff/DepartmentStaffList",

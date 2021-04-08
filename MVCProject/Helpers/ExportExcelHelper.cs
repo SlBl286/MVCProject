@@ -30,27 +30,27 @@ namespace MVCProject.Helpers
                     excelWorkSheet.Cells["E1"].Value = "Địa Chỉ";
                     excelWorkSheet.Cells["F1"].Value = "Chức Vụ";
                     excelWorkSheet.Cells["G1"].Value = "Số Năm Công Tác";
-                    excelWorkSheet.Cells["H1"].Value = "Phòng Ban";
+                    excelWorkSheet.Cells["I1"].Value = "Phòng Ban";
                     excelWorkSheet.Cells["A2"].LoadFromCollection(ds);
                     excelWorkSheet.Cells["C2:C"+ (ds.Count+1).ToString()].Style.Numberformat.Format = "dd-MM-yyyy";
                     
-                    excelWorkSheet.Cells["A1:H"+ (ds.Count+1).ToString()].Style.Font.Size = 15;
-                    excelWorkSheet.Cells["A1:H1"].Style.Font.Bold = true;
-                    excelWorkSheet.Cells["A1:H1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    excelWorkSheet.Cells["A1:H1"].Style.Fill.BackgroundColor.SetColor(Color.Green);
-                    excelWorkSheet.Cells["A1:H1"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
-                    excelWorkSheet.Cells["A1:H1"].Style.Border.Right.Style = ExcelBorderStyle.Thick;
-                    excelWorkSheet.Cells["A1:H1"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
-                    excelWorkSheet.Cells["A1:H1"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
+                    excelWorkSheet.Cells["A1:I"+ (ds.Count+1).ToString()].Style.Font.Size = 15;
+                    excelWorkSheet.Cells["A1:I1"].Style.Font.Bold = true;
+                    excelWorkSheet.Cells["A1:I1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    excelWorkSheet.Cells["A1:I1"].Style.Fill.BackgroundColor.SetColor(Color.Green);
+                    excelWorkSheet.Cells["A1:I1"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+                    excelWorkSheet.Cells["A1:I1"].Style.Border.Right.Style = ExcelBorderStyle.Thick;
+                    excelWorkSheet.Cells["A1:I1"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+                    excelWorkSheet.Cells["A1:I1"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
                     //make the borders of cells A18 - J18 double and with a purple color
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Top.Style = ExcelBorderStyle.Double;
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Top.Color.SetColor(Color.Purple);
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Bottom.Color.SetColor(Color.Purple);
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Right.Style = ExcelBorderStyle.Double;
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Left.Style = ExcelBorderStyle.Double;
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Right.Color.SetColor(Color.Purple);
-                    excelWorkSheet.Cells["A2:H"+ (ds.Count+1).ToString()].Style.Border.Left.Color.SetColor(Color.Purple);
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Top.Style = ExcelBorderStyle.Double;
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Bottom.Style = ExcelBorderStyle.Double;
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Top.Color.SetColor(Color.Purple);
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Bottom.Color.SetColor(Color.Purple);
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Right.Style = ExcelBorderStyle.Double;
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Left.Style = ExcelBorderStyle.Double;
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Right.Color.SetColor(Color.Purple);
+                    excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Left.Color.SetColor(Color.Purple);
                     double minimumSize = 10;
                     excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns(minimumSize);
          
@@ -66,12 +66,12 @@ namespace MVCProject.Helpers
                     {
                         excelWorkSheet.Column(col).Width = excelWorkSheet.Column(col).Width + 1;
                     }
-                    excelWorkSheet.Cells["A1:H"+ (ds.Count+1).ToString()].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    excelWorkSheet.Cells["A1:H"+ (ds.Count+1).ToString()].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    excelWorkSheet.Cells["A1:I"+ (ds.Count+1).ToString()].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    excelWorkSheet.Cells["A1:I"+ (ds.Count+1).ToString()].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                     excelWorkSheet.Cells["B2:B"+(ds.Count+1).ToString()].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                     excelWorkSheet.Cells["E2:E"+(ds.Count+1).ToString()].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                    excelWorkSheet.Cells["A1:H"+ (ds.Count+1).ToString()].Style.WrapText = true;
-
+                    excelWorkSheet.Cells["A1:I"+ (ds.Count+1).ToString()].Style.WrapText = true;
+                   excelWorkSheet.DeleteColumn(8);
                     excelPackage.SaveAs(file);
 
                 }       

@@ -17,8 +17,7 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult Index(int phongban_id=0)
         {
-            HttpContext.Session.SetString("phongban_id",JsonConvert.SerializeObject(phongban_id));
-            ViewBag.PhongBanId = phongban_id;
+            ViewBag.PhongBanId = (int)phongban_id;
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             ViewBag.pageNumberIndex = (int)DBHelper.Get().Count/ itemPerPage;
             HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(DBHelper.Get()));
@@ -122,13 +121,13 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            double LastStaffId = DBHelper.GetTheLastID();
-            if (LastStaffId % 10 == 0) {
-                ViewBag.LastStaffId = "NV-" + (LastStaffId / 10000).ToString().Substring(2) + "0";
-            }
-            else {
-                ViewBag.LastStaffId = "NV-" + (LastStaffId / 10000).ToString().Substring(2);
-            }
+            string LastStaffId = DBHelper.GetTheLastID().ToString();
+            string str ="";
+            if(LastStaffId.Count() <= 4)
+                str = new string('0', 4- LastStaffId.Count());
+            else
+                str = "0";
+            ViewBag.LastStaffId = "NV-" + str + LastStaffId;
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             return View();
         }

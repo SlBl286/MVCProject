@@ -8,8 +8,7 @@
 <br />
 <br />
 <div>
-    <div>
-            
+    <div>      
             <form action="advandSearch" method="post" id="advandSearch">
                 <div class="form-row">
                     <div class="form-group col-md-12">
@@ -25,44 +24,66 @@
                             <option value="" selected>-- Tất Cả --</option>
                         </select>
                     </div>
-                    
-                    <div class="col-md-1">
-                        <label for="a" class="form-label" style="margin-top:15px">Số Năm Công Tác :</label>
-                        <input type="ro" class="form-control" value="Số Năm Công Tác" id="a" hidden>
+                    <div class="form-group col-md-2">
+                        <label for="minRange" class="form-label" style="width:150px">Số Năm Công Tác</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">từ : </span>
+                            </div>
+                            <input type="number" class="form-control" value="0" id="minRange">
+                        </div>     
                     </div>
-                    <div class="form-group col-md-1">
-                        <label for="minRange" class="form-label">Từ : </label>
-                        <input type="number" class="form-control" value="0" id="minRange">
+                    
+                    <div class="form-group col-md-2">
+                        <label for="maxRange" class="form-label">&nbsp;</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">đến : </span>
+                            </div>
+                            <input type="number" class="form-control" value="100" id="maxRange">
+                        </div>
                         
                     </div>
                     
-                    <div class="form-group col-md-1">
-                        <label for="maxRange" class="form-label">Đến : </label>
-                        <input type="number" class="form-control" value="100" id="maxRange">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <label for="" class="form-label"></label>
+                        <button type="reset" class="form-control btn btn-outline-secondary btn-lg" id="resetSearch">RESET</button>
                     </div>
-                    
-                    <div class="col-md-3"></div>
                  <div class="form-group col-md-2">
                      <label for="" class="form-label"></label>
-                        <button type="submit" class="form-control btn btn-outline-primary btn-lg">Tìm Kiếm</button>
+                        <button type="submit" class="form-control btn btn-outline-primary btn-lg" id="searchBtn">Tìm Kiếm</button>
                 </div>
                 <p id="ErrorMgs" style="color:red;width:30vw"></p>
              </div> 
             
             </form>
-            
-          
     </div>
     <br />
     <h1>Danh Sách Nhân Viên</h1>
 </div>
-<div>
+<div class="row">
+    <div class="col-5">
         <select class="custom-select" id="chonPhongBan" style="width:20vw;" asp-items="@(new SelectList(@ViewBag.dsPhongBan,"id","TenPhongBan"))">
-            <option value="0" selected>-- Tất Cả --</option>
+            <option value="0" selected>Chọn Phòng Ban</option>
         </select>
-        <a class="btn btn btn-outline-success float-right" id="excelExport" asp-action="DownloadFile" asp-controller="staff"><i class="fas fa-file-excel"></i> Xuất File Excel</a>
-        
-</div>
+    </div>
+    <div class="col-5">
+        <div class="input-group float-right">
+            <div class="custom-file ">
+                <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+                <label class="custom-file-label" for="inputGroupFile04"></label>
+            </div>
+            <div class="input-group-append bg-gradient-primary">
+                <button class="btn btn-outline-primary " type="button" id="inputGroupFileAddon04"><i class="fas fa-file-excel"></i>  Nhập Dữ Liệu</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-2 float-right">
+        <a class="btn btn-outline-success float-right" asp-action="downloadFile" asp-asp-controller="staff"><i class="fas fa-file-excel"></i> Xuất Dữ Liệu</a> 
+    </div>
+</div>    
+
 <br />
 <input type="number" id="pageNumberIndex" value="@ViewBag.pageNumberIndex" hidden />
 <div id="tablePartial">

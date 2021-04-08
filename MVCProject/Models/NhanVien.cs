@@ -29,6 +29,7 @@ namespace MVCProject.Models
         public int SoNamCongTac { get; set; }
         [Display(Name = "Phòng Ban")]
         public int PhongBan_Id {get;set;}
+        public string PhongBan {get;set;}
 
         public NhanVien() { }
         public NhanVien(string maNhanVien, string hoTen, DateTime ngaySinh, string soDienThoai, string diaChi, string chucVu, int soNamCongTac)
