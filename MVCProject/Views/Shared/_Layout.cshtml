@@ -36,7 +36,7 @@
             @RenderBody()
         </main>
     </div>
-    <div class="modal fade " tabindex="-1" role="document" id="CreateModal">
+    <div class="modal fade " tabindex="-1" role="document" id="Modal">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
 
@@ -48,7 +48,23 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade " tabindex="-1" role="document" id="loadingModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Đang Tải File</h4>
+                    <button class="close" data-dismiss="modal"><i class="fas fa-times-circle" style="font-size:32px;"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="progress">
+                        <div class="bar" style="width: 100%;"></div>
+                        <div class="percent">100%</div>
+                    </div>
+                    <div id="status"><br></div>  
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - MVCProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -56,6 +72,9 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

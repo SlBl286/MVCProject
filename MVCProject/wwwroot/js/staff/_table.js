@@ -127,7 +127,7 @@ $(document).ready(function () {
              data: { MaNhanVien: MaNhanVien},
              dataType: "json",
              success: function (json) {
-                 var delCurrentPage = "p-" + (pageIndex+1).toString();
+                 var delCurrentPage = "p-" + (pageIndex).toString();
                  $("#" + MaNhanVien).closest("tr").remove();  
                  $.ajax({
                      type: "Post",

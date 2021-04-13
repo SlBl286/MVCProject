@@ -19,13 +19,13 @@ namespace MVCProject.Helpers
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
                 if (key == null && phongban_id == 0)
-                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id order by MaNhanVien ASC");
+                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id order by MaNhanVien ASC");
                 else if (key == null ||key == "" )
-                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id order by MaNhanVien ASC",new { phongban_id = phongban_id});
+                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id order by MaNhanVien ASC", new { phongban_id = phongban_id});
                 else if (phongban_id == 0)
-                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' order by MaNhanVien ASC", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%' order by MaNhanVien ASC", new { key = key });
                 else
-                     nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') AND phongban_id = @phongban_id order by MaNhanVien ASC", new { key = key,phongban_id = phongban_id });
+                     nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') AND phongban_id = @phongban_id order by MaNhanVien ASC", new { key = key,phongban_id = phongban_id });
             }
             return nhanvien.ToList();
         }
@@ -35,9 +35,9 @@ namespace MVCProject.Helpers
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
                 if (key == 0)
-                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id order by MaNhanVien ASC");
+                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id order by MaNhanVien ASC");
                 else
-                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @key order by MaNhanVien ASC", new { key = key });
+                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @key order by MaNhanVien ASC", new { key = key });
             }
             return nhanvien.ToList();
         }
@@ -56,34 +56,34 @@ namespace MVCProject.Helpers
                 connection.Open();
                 if ((keySearch == null || keySearch == "") && phongBanId == 0){
                     if (chucVu == null || chucVu == ""){
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC",new {min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {min = min,max = max});
                     }
                     else
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC",new {chucVu = chucVu,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {chucVu = chucVu,min = min,max = max});
                 }
                     
                 else if(keySearch == null || keySearch == ""){
                     if (chucVu == null || chucVu == ""){
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id and sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id and sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,min = min,max = max});
                     }
                     else
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
                 }
                     
                 else if(phongBanId == 0){
                     if (chucVu == null || chucVu == ""){
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,min = min,max = max});
                     }
                     else
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%')  and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,chucVu = chucVu,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%')  and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,chucVu = chucVu,min = min,max = max});
                 }
                     
                 else{
                     if (chucVu == null || chucVu == ""){
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongban_id AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongban_id AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,min = min,max = max});
                     }
                     else
-                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
+                        nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where (lower(unaccent(hoten)) like '%' || lower(unaccent(@key)) || '%' OR lower(unaccent(diachi)) like '%' || lower(unaccent(@key)) || '%') and  phongban_id = @phongban_id and lower(unaccent(chucvu)) like '%' || lower(unaccent(@chucVu)) || '%' AND sonamcongtac BETWEEN @min AND @max  order by MaNhanVien ASC", new {key = keySearch,phongban_id = phongBanId,chucVu = chucVu,min = min,max = max});
                 }
                     
             }

@@ -2,7 +2,6 @@
     var value = "p-1";
     var PhongBan_Id = parseInt($("#PhongBanId").val());
     var option = "option[value ="+PhongBan_Id +"]";
-    console.log(PhongBan_Id);
     $("option").removeAttr('selected')
     $(option).prop('selected', true)
     var PhongBanId = null;
@@ -119,4 +118,27 @@
             });
         },200);
     });
-});
+    $("#importExcelBtn").click(function(){
+        var filepath = $("#excelfile").val();
+
+        if (filepath == null || filepath.length <= 0) alert("Bạn chưa chọn Tập Tin")
+        else if (filepath.substring(filepath.lastIndexOf('.') + 1, filepath.length) == "xlsx" || filepath.substring(filepath.lastIndexOf('.') + 1, filepath.length) == "xsl"){
+           
+            var options = {
+                target:  '#divToUpdate',
+                url:     '/staff/import',
+                dataType: "text",
+                success: function(data) {
+                    $("#loadingModal").modal('show');
+                    $("#loadingModal .modal-body").html(data);
+                }
+              };
+            $("#excelFileForm").ajaxSubmit(options)
+            
+           console.log("aaa");   
+        }    
+        else alert("Tệp tin sai định dạng");
+    });
+    
+});  
+    

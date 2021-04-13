@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCProject.Helpers;
 using MVCProject.Models;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MVCProject.Controllers
 {
@@ -121,13 +125,8 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            string LastStaffId = DBHelper.GetTheLastID().ToString();
-            string str ="";
-            if(LastStaffId.Count() <= 4)
-                str = new string('0', 4- LastStaffId.Count());
-            else
-                str = "0";
-            ViewBag.LastStaffId = "NV-" + str + LastStaffId;
+            
+            ViewBag.LastStaffId = GHelper.LastStaffID();
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
             return View();
         }
@@ -158,7 +157,7 @@ namespace MVCProject.Controllers
         }
         public IActionResult Report()
         {
-            return Content("dang xay dung");
+            return Content($"dang xay dung");
         }
        public StaffController()
         {}
@@ -177,8 +176,8 @@ namespace MVCProject.Controllers
         }
         public FileResult DownloadFile(){
             List<NhanVien> dsNhanVien = JsonConvert.DeserializeObject<List<NhanVien>>(HttpContext.Session.GetString("currentStaffList"));
-            
-            ExportExcelHelper.Export(dsNhanVien);
+
+            ExcelHelper.Export(dsNhanVien);
             string filePath = @"wwwroot/data/Danh_Sach_Nhan_Vien.xlsx";
             string fileName = "Danh_Sach_Nhan_Vien.xlsx";
 
@@ -186,19 +185,41 @@ namespace MVCProject.Controllers
 
             return File(fileBytes, "application/force-download", fileName); 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Import(IFormFile excelfile){
+            var list = new List<NhanVien>();
+            int numOfUpdatedStaff=0,numOfCreatedStaff=0;
+            using (var stream = new MemoryStream()) {
+                await excelfile.CopyToAsync(stream);
+                list = ExcelHelper.Import(stream);
+                foreach (var nv in list)
+                    {
+                    if (!IsDuplicatedStaff(nv)) {
+                        numOfCreatedStaff++;
+                        nv.MaNhanVien = GHelper.LastStaffID();
+                        Create(nv);
+                    }
+                    else if (!EditValidate(nv)){
+                        numOfUpdatedStaff++;
+                        Edit(nv);
+                    } 
+                    
+                }
+            }
+            ViewBag.numOfCreatedStaff = numOfCreatedStaff;
+            ViewBag.numOfUpdatedStaff = numOfUpdatedStaff;
+            return View();
+        }
         public bool IsDuplicatedStaff(NhanVien pnv)
         {
             pnv.HoTen = GHelper.XuLyTen(pnv.HoTen);
             bool daTonTai = false;
             List<NhanVien> DsNhanVien = DBHelper.Get();
             foreach (NhanVien nv in DsNhanVien) {
-                if (nv.HoTen == pnv.HoTen) {
-                    if (DateTime.Compare(nv.NgaySinh, pnv.NgaySinh) == 0) {
+                if (nv.HoTen == pnv.HoTen && DateTime.Compare(nv.NgaySinh, pnv.NgaySinh) == 0) {
                         daTonTai = true;
                         break;
-
-                    }
-                    else { daTonTai = false; }
                 }
                 else { daTonTai = false; }
             }

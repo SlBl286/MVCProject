@@ -8,7 +8,7 @@ using OfficeOpenXml.Style;
 
 namespace MVCProject.Helpers
 {
-    public static class ExportExcelHelper
+    public static class ExcelHelper
     {
         public static bool Export(List<NhanVien> ds){
             FileInfo file = new FileInfo(@"wwwroot\data\Danh_Sach_Nhan_Vien.xlsx");
@@ -51,7 +51,7 @@ namespace MVCProject.Helpers
                     excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Left.Style = ExcelBorderStyle.Double;
                     excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Right.Color.SetColor(Color.Purple);
                     excelWorkSheet.Cells["A2:I"+ (ds.Count+1).ToString()].Style.Border.Left.Color.SetColor(Color.Purple);
-                    double minimumSize = 10;
+                    double minimumSize = 15;
                     excelWorkSheet.Cells[excelWorkSheet.Dimension.Address].AutoFitColumns(minimumSize);
          
                     double maximumSize = 100;
@@ -71,11 +71,37 @@ namespace MVCProject.Helpers
                     excelWorkSheet.Cells["B2:B"+(ds.Count+1).ToString()].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                     excelWorkSheet.Cells["E2:E"+(ds.Count+1).ToString()].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                     excelWorkSheet.Cells["A1:I"+ (ds.Count+1).ToString()].Style.WrapText = true;
-                   excelWorkSheet.DeleteColumn(8);
+                   excelWorkSheet.Column(8).Hidden = true;
                     excelPackage.SaveAs(file);
 
                 }       
             return true;
         }
-    }
+        public static List<NhanVien> Import(MemoryStream stream)
+        {
+            var list = new List<NhanVien>();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage(stream)) {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                worksheet.Column(8).Hidden = false;
+                var rowCount = worksheet.Dimension.Rows;
+
+                for (int row = 2; row <= rowCount; row++) {
+                    list.Add(new NhanVien {
+                        MaNhanVien = worksheet.Cells[row, 1].Value.ToString().Trim(),
+                        HoTen = worksheet.Cells[row, 2].Value.ToString().Trim(),
+                        NgaySinh = DateTime.FromOADate(float.Parse(worksheet.Cells[row, 3].Value.ToString().Trim())),
+                        SoDienThoai = worksheet.Cells[row, 4].Value.ToString().Trim(),
+                        DiaChi = worksheet.Cells[row, 5].Value.ToString().Trim(),
+                        ChucVu = worksheet.Cells[row, 6].Value.ToString().Trim(),
+                        SoNamCongTac = int.Parse(worksheet.Cells[row, 7].Value.ToString().Trim()),
+                        PhongBan_Id = int.Parse(worksheet.Cells[row, 8].Value.ToString().Trim()),
+                        PhongBan = worksheet.Cells[row, 9].Value.ToString().Trim(),
+
+                    });
+                }
+            }
+            return list;
+        }
+     }
 }

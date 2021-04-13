@@ -42,5 +42,15 @@ namespace MVCProject.Helpers
             }
             return result;
         }
+        public static string LastStaffID()
+        {
+            string LastStaffId = DBHelper.GetTheLastID().ToString();
+            string str = "";
+            if (LastStaffId.Count() <= 4)
+                str = new string('0', 4 - LastStaffId.Count());
+            else
+                str = "";
+            return "NV-" + str + LastStaffId;
+        }
     }
 }

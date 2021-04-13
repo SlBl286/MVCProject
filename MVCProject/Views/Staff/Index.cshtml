@@ -68,17 +68,24 @@
             <option value="0" selected>Chọn Phòng Ban</option>
         </select>
     </div>
-    <div class="col-5">
+    <div class="col-3">
         <div class="input-group float-right">
-            <div class="custom-file ">
-                <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-                <label class="custom-file-label" for="inputGroupFile04"></label>
-            </div>
-            <div class="input-group-append bg-gradient-primary">
-                <button class="btn btn-outline-primary " type="button" id="inputGroupFileAddon04"><i class="fas fa-file-excel"></i>  Nhập Dữ Liệu</button>
-            </div>
+            <form action="import" enctype="multipart/form-data" method="post" id="excelFileForm">
+                <div class="form-row">
+                    <div class="custom-file ">
+                        <input type="file" class="custom-file-input" id="excelfile" name="excelfile" aria-describedby="inputGroupFileAddon04">
+                        <label class="custom-file-label" for="excelfile">Chọn Tệp</label>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+    <div class="col-2">
+        <div class="input-group-append bg-gradient-primary">
+                <button class="btn btn-outline-primary " type="button" id="importExcelBtn"><i class="fas fa-file-excel"></i>  Nhập Dữ Liệu</button>
+            </div>
+    </div>
+    
     <div class="col-2 float-right">
         <a class="btn btn-outline-success float-right" asp-action="downloadFile" asp-asp-controller="staff"><i class="fas fa-file-excel"></i> Xuất Dữ Liệu</a> 
     </div>

@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_LayoutWithoutNav";
+}
+<div class="text-center">
+    <div class="spinner-border text-success" style="width: 6rem; height: 6rem;" role="status"  id="loadingIcon">
+        <span class="sr-only">Loading...</span>
+    </div>
+    
+</div>
+<div class="text-center" style="color:green" id="doneIcon" hidden><i class="far fa-check-circle fa-7x" ></i></div>
+<br>
+<div class="text-center" id="notiNumberAddAndEdit" hidden>
+    <h4>Số nhân viên đã thêm @ViewBag.numOfCreatedStaff, số nhân viên đã sửa @ViewBag.numOfUpdatedStaff</h4>
+</div>
+
+<script src="~/js/staff/import.js">
+</script>
