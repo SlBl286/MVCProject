@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MVCProject.Helpers;
+using Newtonsoft.Json;
+
 namespace MVCProject.Controllers
 {
     public class DepartmentController : Controller
@@ -21,7 +23,11 @@ namespace MVCProject.Controllers
             ViewBag.itemPerPage = itemPerPage;
             return View();
         }
-        
+        public string dsPhongBan()
+        {
+            ViewBag.itemPerPage = itemPerPage;
+            return JsonConvert.SerializeObject(DBHelper.GetDP());
+        }
         [HttpPost]
         public int Create(PhongBan newItem){
             newItem.TenPhongBan = GHelper.XuLyTen(newItem.TenPhongBan);

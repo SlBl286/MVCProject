@@ -17,6 +17,11 @@ namespace MVCProject.Controllers
     
     public class StaffController : Controller
     {
+        public enum Option
+        {
+            CREATE,
+            EDIT
+        }
         private readonly int itemPerPage = 8;
         [HttpGet]
         public IActionResult Index(int phongban_id=0)
@@ -193,14 +198,19 @@ namespace MVCProject.Controllers
             using (var stream = new MemoryStream()) {
                 await excelfile.CopyToAsync(stream);
                 list = ExcelHelper.Import(stream);
-                foreach (var nv in list)
-                    {
+                foreach (var nv in list){
+                    if(DBHelper.GetPBID(nv.PhongBan) != -1 )
+                        nv.PhongBan_Id = DBHelper.GetPBID(nv.PhongBan);
+                    else{
+                        DBHelper.CreatePB(new PhongBan{ TenPhongBan = nv.PhongBan});
+                        nv.PhongBan_Id = DBHelper.GetPBID(nv.PhongBan);
+                    }
                     if (!IsDuplicatedStaff(nv)) {
                         numOfCreatedStaff++;
                         nv.MaNhanVien = GHelper.LastStaffID();
                         Create(nv);
                     }
-                    else if (!EditValidate(nv)){
+                    else if (IsDuplicatedStaff(nv,Option.EDIT)){
                         numOfUpdatedStaff++;
                         Edit(nv);
                     } 
@@ -211,17 +221,26 @@ namespace MVCProject.Controllers
             ViewBag.numOfUpdatedStaff = numOfUpdatedStaff;
             return View();
         }
-        public bool IsDuplicatedStaff(NhanVien pnv)
+        public bool IsDuplicatedStaff(NhanVien pnv,Option option = Option.CREATE)
         {
             pnv.HoTen = GHelper.XuLyTen(pnv.HoTen);
             bool daTonTai = false;
             List<NhanVien> DsNhanVien = DBHelper.Get();
             foreach (NhanVien nv in DsNhanVien) {
-                if (nv.HoTen == pnv.HoTen && DateTime.Compare(nv.NgaySinh, pnv.NgaySinh) == 0) {
-                        daTonTai = true;
-                        break;
+                if(option == Option.CREATE){
+                    if (nv.HoTen == pnv.HoTen && DateTime.Compare(nv.NgaySinh, pnv.NgaySinh) == 0 ) {
+                            daTonTai = true;
+                            break;
+                    }
+                    else { daTonTai = false; }
                 }
-                else { daTonTai = false; }
+                else if(option == Option.EDIT){
+                    if (nv.HoTen == pnv.HoTen && DateTime.Compare(nv.NgaySinh, pnv.NgaySinh) == 0 && nv.MaNhanVien == pnv.MaNhanVien) {
+                            daTonTai = true;
+                            break;
+                    }
+                    else { daTonTai = false; }
+                }
             }
             return daTonTai;
         }

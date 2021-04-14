@@ -83,19 +83,19 @@ namespace MVCProject.Helpers
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(stream)) {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                worksheet.Column(8).Hidden = false;
                 var rowCount = worksheet.Dimension.Rows;
 
                 for (int row = 2; row <= rowCount; row++) {
                     list.Add(new NhanVien {
-                        MaNhanVien = worksheet.Cells[row, 1].Value.ToString().Trim(),
+                        //Biến = ( điều kiện )? (Lệnh1 thực thi nếu đk đúng) : (lệnh 2 thực thi nếu đk sai);
+                        MaNhanVien = worksheet.Cells[row, 1].Value == null ? null : worksheet.Cells[row, 1].Value.ToString().Trim(),
                         HoTen = worksheet.Cells[row, 2].Value.ToString().Trim(),
                         NgaySinh = DateTime.FromOADate(float.Parse(worksheet.Cells[row, 3].Value.ToString().Trim())),
                         SoDienThoai = worksheet.Cells[row, 4].Value.ToString().Trim(),
                         DiaChi = worksheet.Cells[row, 5].Value.ToString().Trim(),
                         ChucVu = worksheet.Cells[row, 6].Value.ToString().Trim(),
                         SoNamCongTac = int.Parse(worksheet.Cells[row, 7].Value.ToString().Trim()),
-                        PhongBan_Id = int.Parse(worksheet.Cells[row, 8].Value.ToString().Trim()),
+                        PhongBan_Id = 0,
                         PhongBan = worksheet.Cells[row, 9].Value.ToString().Trim(),
 
                     });

@@ -29,6 +29,15 @@ namespace MVCProject.Helpers
             }
             return nhanvien.ToList();
         }
+        public static int GetPBID(string tenPhongBan){
+            IEnumerable<int> id;
+
+            using (var connection = new NpgsqlConnection(connectionString)){
+                connection.Open();
+                    id = connection.Query<int>("select id from phong_ban where unaccent(tenphongban) = unaccent(@tenPhongBan)", new { tenPhongBan = tenPhongBan });
+            }
+            return (id.Count() == 0) ? -1 : id.First();
+        }
         public static List<NhanVien> GetStaffByDP(int key = 0)
         {
             IEnumerable<NhanVien> nhanvien = null;
@@ -145,7 +154,7 @@ namespace MVCProject.Helpers
         {
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-               connection.Execute("INSERT INTO phong_ban(TenPhongBan) VALUES (@tenPhongBan);",   new { pb.TenPhongBan });
+               connection.Execute("INSERT INTO phong_ban(TenPhongBan) VALUES (@tenPhongBan) ;",   new { pb.TenPhongBan });
 
             }
         }

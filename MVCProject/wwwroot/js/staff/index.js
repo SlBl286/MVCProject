@@ -133,9 +133,33 @@
                     $("#loadingModal .modal-body").html(data);
                 }
               };
-            $("#excelFileForm").ajaxSubmit(options)
+            $("#excelFileForm").ajaxSubmit(options);
+              setTimeout(function(){
+                $.ajax({
+                    type: "Post",
+                    url: "/department/dsPhongBan",
+                    dataType: "json",
+                    success: function (json) {
+                        console.log(json);
+                        $("#chonPhongBan").empty();
+                        $("#chonPhongBan").append('<option value="0" selected>Chọn Phòng Ban</option>');
+                        $.each(json,function(key,value){
+                                
+                                $("#chonPhongBan").append('<option value="'+value.id+'">'+value.TenPhongBan+'</option>');
+     
+                        });
+                        
+                        
+                        
+                    },
+                    error: function (req, status, error) {
+                        console.log(error);
+        
+                    }
+                });
+              },1000);
             
-           console.log("aaa");   
+
         }    
         else alert("Tệp tin sai định dạng");
     });
