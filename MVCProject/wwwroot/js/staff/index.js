@@ -51,13 +51,13 @@
         var max = $("#maxRange").val();
         var valid = false;
         if(parseInt(min) > parseInt(max)){
-            $("#ErrorMgs").text("min phải nhỏ hơn max");
+            $("#ErrorMgsSearch").text("min phải nhỏ hơn max");
             $("#minRange").css("border-color", "red");
             $("#maxRange").css("border-color", "red");
             valid = false;
         }
         else{
-            $("#ErrorMgs").text("");
+            $("#ErrorMgsSearch").text("");
             $("#minRange").css("border-color", "gray");
             $("#maxRange").css("border-color", "gray");
             valid = true;
