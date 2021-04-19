@@ -6,7 +6,7 @@ using MVCProject.Repository;
 using MVCProject.Models;
 namespace MVCProject.Repository
 {
-    public class DepartmentReponsitory : IGenericRepository<PhongBan>, IDepartmentReponsitory
+    public class DepartmentReponsitory : IGenericRepository<PhongBan>, IDepartmentRepository
     {
         public void Add(PhongBan item)
         {

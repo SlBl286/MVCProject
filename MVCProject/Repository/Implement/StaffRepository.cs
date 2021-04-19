@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MVCProject.Repository
 {
-    public class StaffRepository : IGenericRepository<NhanVien>,IStaffReponsitory
+    public class StaffRepository : IGenericRepository<NhanVien>,IStaffRepository
     {
         
         private string connectionString;
@@ -34,7 +34,9 @@ namespace MVCProject.Repository
 
         public IEnumerable<NhanVien> FindAll()
         {
-            throw new NotImplementedException();
+            using(IDbConnection conn = Connection){
+                return conn.Find<NhanVien>(statement => statement.OrderBy($"{nameof(NhanVien.MaNhanVien):C} ASC"));
+            }
         }
 
         public NhanVien FindByID(int id)

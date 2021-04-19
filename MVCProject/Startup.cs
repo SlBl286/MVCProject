@@ -26,8 +26,8 @@ namespace MVCProject
         {
             
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddTransient<IStaffReponsitory,StaffRepository>();
-            services.AddTransient<IDepartmentReponsitory,DepartmentReponsitory>();
+            services.AddScoped<IStaffRepository,StaffRepository>();
+            services.AddScoped<IDepartmentRepository,DepartmentReponsitory>();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

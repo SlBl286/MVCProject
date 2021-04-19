@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCProject.Helpers;
 using MVCProject.Models;
+using MVCProject.Repository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,24 @@ namespace MVCProject.Controllers
     
     public class StaffController : Controller
     {
+        private readonly IStaffRepository StaffRepository;
+        private readonly int itemPerPage = 8;
         public enum Option
         {
             CREATE,
             EDIT
         }
-        private readonly int itemPerPage = 8;
+        public StaffController(IStaffRepository _staffRepotory){
+            StaffRepository = _staffRepotory;
+        }
+        
         [HttpGet]
         public IActionResult Index(int phongban_id=0)
         {
             ViewBag.PhongBanId = (int)phongban_id;
             ViewBag.dsPhongBan = new List<PhongBan>(DBHelper.GetDP());
-            ViewBag.pageNumberIndex = (int)DBHelper.Get().Count/ itemPerPage;
-            HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(DBHelper.Get()));
+            ViewBag.pageNumberIndex = (int)StaffRepository.FindAll().ToList().Count/ itemPerPage;
+            HttpContext.Session.SetString("currentStaffList",JsonConvert.SerializeObject(StaffRepository.FindAll().ToList()));
             List<string> dsChucVu = DBHelper.GetChucVu();
             var selectListItems = dsChucVu.Select(x => new SelectListItem(){ Value = x, Text = x }).ToList();
             return View(selectListItems);
@@ -163,8 +169,6 @@ namespace MVCProject.Controllers
         {
             return Content($"dang xay dung");
         }
-       public StaffController()
-        {}
         public IActionResult _Table(int pageNumber,string currentPage = "p-1",List<NhanVien> dsNhanVien = null){
 
            byte[] json;

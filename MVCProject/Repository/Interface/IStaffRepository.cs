@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MVCProject.Repository
 {
-    public interface IDepartmentReponsitory : IGenericRepository<PhongBan>
+    public interface IStaffRepository : IGenericRepository<NhanVien>
     {
         
     }
