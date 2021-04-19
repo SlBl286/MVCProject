@@ -1,3 +1,4 @@
+using Dapper.FastCrud;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using MVCProject.Repository;
 namespace MVCProject
 {
     public class Startup
@@ -23,6 +24,10 @@ namespace MVCProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient<IStaffReponsitory,StaffRepository>();
+            services.AddTransient<IDepartmentReponsitory,DepartmentReponsitory>();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -44,7 +49,7 @@ namespace MVCProject
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();

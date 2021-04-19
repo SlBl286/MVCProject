@@ -6,12 +6,16 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace MVCProject.Models
 {
-    public class PhongBan
+    [Table("phong_ban")]
+    public partial class PhongBan : BaseEntity
     {
-        public int id {get;set;}
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public virtual int id {get;}
         [Display(Name = "Tên Phòng")]
         [Required(ErrorMessage = "Không được bỏ trống tên")]  
-        public string TenPhongBan { get; set; }
+        [Column("tenphongban")]
+        public virtual string TenPhongBan { get; set; }
 
         public PhongBan() { }
         public PhongBan(string TenPhongBan)

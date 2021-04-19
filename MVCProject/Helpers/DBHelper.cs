@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.FastCrud;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.Models;
@@ -19,7 +20,9 @@ namespace MVCProject.Helpers
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
                 if (key == null && phongban_id == 0)
-                    nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id order by MaNhanVien ASC");
+                nhanvien = connection.Find<NhanVien>(statement => statement
+                .OrderBy(($"{nameof(NhanVien.MaNhanVien):C} ASC")));
+                   // nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id order by MaNhanVien ASC");
                 else if (key == null ||key == "" )
                     nhanvien = connection.Query<NhanVien>("select manhanvien,hoten,ngaysinh,sodienthoai,diachi,chucvu,sonamcongtac,phongban_id,phong_ban.tenphongban as phongban from nhan_vien inner join phong_ban on nhan_vien.phongban_id = phong_ban.id where phongban_id = @phongban_id order by MaNhanVien ASC", new { phongban_id = phongban_id});
                 else if (phongban_id == 0)
@@ -100,10 +103,11 @@ namespace MVCProject.Helpers
         }
         public static List<PhongBan> GetDP(string key = null){
             IEnumerable<PhongBan> dsPhongBan = null;
+            OrmConfiguration.DefaultDialect = SqlDialect.PostgreSql;
             using (var connection = new NpgsqlConnection(connectionString)){
                 connection.Open();
                 if (key == null)
-                    dsPhongBan = connection.Query<PhongBan>("SELECT * from Phong_ban order by id ASC");
+                    dsPhongBan = connection.Find<PhongBan>();
                 else    
                     dsPhongBan = connection.Query<PhongBan>("SELECT * from Phong_ban where lower(unaccent(Ten_Phong_Ban)) like '%' || lower(unaccent(@key)) || '%' ", new { key = key });
             }
@@ -133,10 +137,9 @@ namespace MVCProject.Helpers
         public static int GetTheLastID()
         {
             
-            
             using (var connection = new NpgsqlConnection(connectionString)) {
                 connection.Open();
-                var id = connection.Query<int>("select nextval('nhanvien_id_seq'::regclass); ");
+                var id = connection.Query<int>("select nextval('nhan_vien_id_seq'::regclass); ");
                 if ((int)id.Count() == 0) return 0;
                 return id.First();
             }
